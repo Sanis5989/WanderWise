@@ -1,23 +1,29 @@
 "use client"
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaMapMarkerAlt, FaExchangeAlt, FaCalendarAlt } from "react-icons/fa";
 import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {DailyActivitiesContext} from "./HomePage"
+
 
 
 export default function LocationPicker() {
-const locations = [
-  "Sydney",
-  "Melbourne",
-  "Brisbane",
-  "Gold Coast",
-  "Perth",
-  "Adelaide",
-  "Canberra",
-  "Darwin",
-  "Hobart",
-];
+
+  //context for daily activities
+   const { setDailyActivities } = useContext(DailyActivitiesContext);
+
+  const locations = [
+    "Sydney",
+    "Melbourne",
+    "Brisbane",
+    "Gold Coast",
+    "Perth",
+    "Adelaide",
+    "Canberra",
+    "Darwin",
+    "Hobart",
+  ];
 
   const [from, setFrom] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
@@ -25,7 +31,7 @@ const locations = [
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-//   function to swap destination and start location
+  //function to swap destination and start location
   const handleSwap = () => {
     const temp = from;
     setFrom(to);
@@ -50,6 +56,26 @@ const locations = [
       }
     );
   };
+
+  //function to create detailed itenary
+  const search = async ()=>{
+    console.log(from,to,startDate,endDate)
+    if(from != null & to != null ){
+      const input = {from,to,startDate,endDate}
+        const res = await fetch("/api/openai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input })
+        });
+        console.log("open")
+        const data = await res.json();
+        console.log("OpenAI Response:", data);
+        setDailyActivities(data)
+    }
+    else{
+      console.log("inpit data");
+    }
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 py-6">
@@ -128,7 +154,7 @@ const locations = [
         </div>
 
         {/* Search Button */}
-        <button className="button-primary">
+        <button className="button-primary" onClick={()=> search()}>
           Search
         </button>
       </div>
