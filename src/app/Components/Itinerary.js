@@ -140,10 +140,10 @@ export default function ItineraryList({data}) {
       ]
     }
   ];
-    setItinerary(dummdata);
+    setItinerary(data?.dailyPlan);
     setLoading(false);
     console.log(data);
-  }, []);
+  }, [data]);
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

@@ -5,7 +5,7 @@ import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {DailyActivitiesContext} from "./HomePage"
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function LocationPicker() {
@@ -60,7 +60,7 @@ export default function LocationPicker() {
   //function to create detailed itenary
   const search = async ()=>{
     console.log(from,to,startDate,endDate)
-    if(from != null & to != null ){
+    if(from != "" && to != "" ){
       const input = {from,to,startDate,endDate}
         const res = await fetch("/api/openai", {
           method: "POST",
@@ -74,6 +74,7 @@ export default function LocationPicker() {
     }
     else{
       console.log("inpit data");
+      toast.error("Please select a destination.")
     }
   }
 

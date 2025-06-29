@@ -5,6 +5,7 @@ import Navbar from './Navbar'
 import LocationPicker from './LocationPicker'
 import ItineraryList from './Itinerary'
 import { createContext, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 export  const DailyActivitiesContext = createContext();
 
@@ -16,6 +17,7 @@ export default function HomePage() {
   return (
     
     <div>
+  
       {/* Navbar */}
       <Navbar/>
       <div>
