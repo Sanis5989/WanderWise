@@ -18,10 +18,132 @@ export default function ItineraryList({data}) {
     //   setItinerary(data);
     //   setLoading(false);
     // });
-    setItinerary(data?.dailyPlan);
+    let dummdata = [
+    {
+      "date": "2025-06-29",
+      "summary": "Arrival in Brisbane and exploring the South Bank",
+      "activities": [
+        {
+          "time": "15:00",
+          "title": "Check-in at Hotel",
+          "description": "Settle into your hotel in Brisbane.",
+          "location": "Downtown Brisbane Hotel"
+        },
+        {
+          "time": "16:00",
+          "title": "Visit South Bank Parklands",
+          "description": "Stroll through the beautiful gardens and enjoy the riverside views.",
+          "location": "South Bank, Brisbane"
+        },
+        {
+          "time": "18:00",
+          "title": "Dinner at Eat Street Northshore",
+          "description": "Experience a variety of food stalls offering local and international cuisines.",
+          "location": "Northshore, Brisbane"
+        },
+        {
+          "time": "20:00",
+          "title": "Explore Brisbane's Nightlife",
+          "description": "Enjoy live music and drinks at local bars.",
+          "location": "Fortitude Valley"
+        }
+      ]
+    },
+    {
+      "date": "2025-06-30",
+      "summary": "Cultural immersion and sightseeing",
+      "activities": [
+        {
+          "time": "09:00",
+          "title": "Brisbane City Botanic Gardens",
+          "description": "Relax and explore the gardens filled with native and exotic plants.",
+          "location": "Botanic Gardens, Brisbane"
+        },
+        {
+          "time": "11:00",
+          "title": "Visit Queensland Art Gallery and Gallery of Modern Art (QAGOMA)",
+          "description": "Discover Australian and international art collections.",
+          "location": "Cultural Centre, Brisbane"
+        },
+        {
+          "time": "13:00",
+          "title": "Lunch at Felix Espresso",
+          "description": "Enjoy a delicious brunch at this popular café.",
+          "location": "Brisbane CBD"
+        },
+        {
+          "time": "15:00",
+          "title": "Take a River Cruise",
+          "description": "Enjoy views of the city skyline from the Brisbane River.",
+          "location": "Brisbane River"
+        }
+      ]
+    },
+    {
+      "date": "2025-07-01",
+      "summary": "Day trip to Moreton Island",
+      "activities": [
+        {
+          "time": "08:00",
+          "title": "Ferry to Moreton Island",
+          "description": "Take a ferry ride to the stunning Moreton Island.",
+          "location": "Brisbane Ferry Terminal"
+        },
+        {
+          "time": "10:00",
+          "title": "Sandboarding on the Tangalooma Island Resort",
+          "description": "Experience the thrill of sandboarding on the island's dunes.",
+          "location": "Tangalooma Island Resort"
+        },
+        {
+          "time": "12:30",
+          "title": "Lunch at Tangalooma Resort",
+          "description": "Enjoy a beachfront lunch with local seafood options.",
+          "location": "Tangalooma Island Resort"
+        },
+        {
+          "time": "15:00",
+          "title": "Snorkeling Tour",
+          "description": "Explore the shipwrecks and marine life around Moreton Island.",
+          "location": "Tangalooma Island Resort"
+        }
+      ]
+    },
+    {
+      "date": "2025-07-02",
+      "summary": "Last day in Brisbane and departure",
+      "activities": [
+        {
+          "time": "09:00",
+          "title": "Visit Lone Pine Koala Sanctuary",
+          "description": "Get up close with koalas and kangaroos at Australia's oldest koala sanctuary.",
+          "location": "Lone Pine, Brisbane"
+        },
+        {
+          "time": "12:00",
+          "title": "Lunch at The Breakfast Creek Hotel",
+          "description": "Enjoy a classic Australian pub lunch at this historic venue.",
+          "location": "Breakfast Creek, Brisbane"
+        },
+        {
+          "time": "14:00",
+          "title": "Shopping at Queen Street Mall",
+          "description": "Explore the vibrant shopping precinct before departure.",
+          "location": "Queen Street Mall, Brisbane"
+        },
+        {
+          "time": "16:00",
+          "title": "Check-out and Head to Airport",
+          "description": "Prepare for your flight back home.",
+          "location": "Brisbane Airport"
+        }
+      ]
+    }
+  ];
+    setItinerary(dummdata);
     setLoading(false);
     console.log(data);
-  }, [data]);
+  }, []);
 
   return (
     <div className="p-6 max-w-4xl mx-auto">

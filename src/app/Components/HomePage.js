@@ -22,6 +22,7 @@ export default function HomePage() {
         <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities}}>
           <LocationPicker/>
           <ItineraryList data={dailyActivities}/>
+        
         </DailyActivitiesContext.Provider>
       </div>
     </div>
