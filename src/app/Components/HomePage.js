@@ -6,6 +6,7 @@ import LocationPicker from './LocationPicker'
 import ItineraryList from './Itinerary'
 import { createContext, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
+import HeroSection from './HeroSection'
 
 export  const DailyActivitiesContext = createContext();
 
@@ -24,7 +25,8 @@ export default function HomePage() {
         <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities}}>
           <LocationPicker/>
           <ItineraryList data={dailyActivities}/>
-        
+
+          <HeroSection/>
         </DailyActivitiesContext.Provider>
       </div>
     </div>

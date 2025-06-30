@@ -39,23 +39,88 @@ export default function LocationPicker() {
   };
   
   //function to handle current location
-  const handleGeolocation = () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation not supported by your browser");
-      return;
-    }
+const handleGeolocation = () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported by your browser");
+    return;
+  }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const coords = `${position.coords.latitude}, ${position.coords.longitude}`;
-        setFrom(coords); // Later: Convert coords to city using reverse geocoding
-        console.log(coords)
-      },
-      () => {
-        alert("Unable to retrieve your location");
-      }
-    );
+  // Add loading state
+  // setLoading(true); // Make sure you have this state
+
+  const options = {
+    enableHighAccuracy: true,    // Request high accuracy
+    timeout: 10000,              // 10 second timeout
+    maximumAge: 60000           // Accept cached position up to 1 minute old
   };
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude, accuracy } = position.coords;
+      const coords = `${latitude}, ${longitude}`;
+      
+      console.log(`Position accuracy: ${accuracy} meters`);
+      
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
+          {
+            headers: {
+              'User-Agent': 'YourAppName/1.0' // Add user agent for better API compliance
+            }
+          }
+        );
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        console.log('Reverse geocoding response:', position);
+        
+        // Better address parsing
+        const address = data.address || {};
+        const city = address.city || 
+                    address.town || 
+                    address.village || 
+                    address.suburb ||
+                    address.neighbourhood ||
+                    address.hamlet ||
+                    "Unknown location";
+        
+        setFrom(city);
+        console.log(`Current city: ${city}`, data);
+        
+      } catch (error) {
+        console.error("Reverse geocoding failed:", error);
+        setFrom(coords); // fallback to coordinates
+      } finally {
+        // setLoading(false);
+      }
+    },
+    (error) => {
+      // setLoading(false);
+      console.error("Geolocation error:", error);
+      
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          alert("Location access denied by user");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Location information unavailable");
+          break;
+        case error.TIMEOUT:
+          alert("Location request timed out");
+          break;
+        default:
+          alert("An unknown error occurred while retrieving location");
+          break;
+      }
+    },
+    options // Pass the options object
+  );
+};
+
 
   //function to create detailed itenary
   const search = async ()=>{
@@ -82,8 +147,8 @@ export default function LocationPicker() {
     <div className="w-full max-w-7xl mx-auto p-4 py-6">
       <div className="flex items-center justify-between rounded-full shadow-md px-4 py-6 gap-2 flex-wrap">
         {/* Leaving From */}
-        <div className="flex items-center gap-2 flex-1 min-w-[150px]">
-          <FaMapMarkerAlt className="text-gray-500" size={25}/>
+        <div className="flex items-center gap-2 flex-1 min-w-[150px] md:ml-5">
+          <FaMapMarkerAlt className="text-gray-500 " size={25}/>
           <div className="w-full">
             <select
                 className="w-full border border-gray-300 rounded-xl p-2"
@@ -108,12 +173,12 @@ export default function LocationPicker() {
         </div>
 
         {/* Swap Button */}
-        <button
+        {/* <button
           onClick={handleSwap}
           className="p-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100"
         >
           <FaExchangeAlt size={18}/>
-        </button>
+        </button> */}
 
         {/* Going To Destination */}
         <div className="flex items-center gap-2 flex-1 min-w-[150px]">
@@ -155,7 +220,7 @@ export default function LocationPicker() {
         </div>
 
         {/* Search Button */}
-        <button className="button-primary" onClick={()=> search()}>
+        <button className="button-primary font-semibold mr-4" onClick={()=> search()}>
           Search
         </button>
       </div>
