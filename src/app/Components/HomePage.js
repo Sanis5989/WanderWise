@@ -7,6 +7,8 @@ import ItineraryList from './Itinerary'
 import { createContext, useState } from 'react'
 
 import HeroSection from './HeroSection'
+import FeaturedCards from './FeaturedCards'
+import UseCases from './UseCases'
 
 // export  const DailyActivitiesContext = createContext();
 
@@ -19,8 +21,10 @@ export default function HomePage() {
     <div>
       {/* Navbar */}
       <Navbar/>
-      
       <HeroSection/>
+      <FeaturedCards/>
+      {/* Usecases description */}
+      <UseCases/>
     </div>
   )
 }

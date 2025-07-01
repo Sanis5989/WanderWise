@@ -22,7 +22,7 @@ export default function HeroSection() {
 
   return (
     <>
-    <div className=" py-16 max-w-[75%] mx-auto">
+    <div className=" pt-16 max-w-[75%] mx-auto">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10">
         {/* Text Content */}
         <motion.div
@@ -80,8 +80,7 @@ export default function HeroSection() {
       
     </div>
 
-    {/* Usecases description */}
-    <UseCases/>
+    
     </>
   );
 }
