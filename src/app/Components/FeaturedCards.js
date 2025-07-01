@@ -59,7 +59,7 @@ const featuredDeals = [
 
 export default function FeaturedCards() {
   return (
-    <div className=" pb-12 px-4 md:px-12 text-white">
+    <div className=" pb-12 px-4 md:px-12 text-white cursor-pointer">
       <h2 className="text-3xl font-bold text-center mb-8">Exciting Featured Adventure Deals for Your Next Trip</h2>
       <div className="flex flex-wrap gap-6 justify-center">
         {featuredDeals.map((deal, index) => (
