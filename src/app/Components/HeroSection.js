@@ -4,11 +4,13 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import UseCases from './UseCases';
+import { useRouter } from 'next/navigation';
 
 const images = ['/hero1.jpg', '/hero2.jpg'];
 
 export default function HeroSection() {
   const [index, setIndex] = useState(0);
+  const router = useRouter();
 
   // Auto change every 5 seconds
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function HeroSection() {
 
   return (
     <>
-    <div className=" py-16 max-w-7xl mx-auto">
+    <div className=" py-16 max-w-[75%] mx-auto">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10">
         {/* Text Content */}
         <motion.div
@@ -36,7 +38,7 @@ export default function HeroSection() {
           <p className="text-gray-600 max-w-md">
             Plan trips in seconds – from flights to daily adventures. Wanderwise builds your perfect travel experience powered by the latest AI.
           </p>
-          <button className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300">
+          <button onClick={()=>router.push("./Trip")} className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 cursor-pointer">
             Plan My Trip
           </button>
         </motion.div>
@@ -77,6 +79,8 @@ export default function HeroSection() {
       </div>
       
     </div>
+
+    {/* Usecases description */}
     <UseCases/>
     </>
   );

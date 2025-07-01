@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaExchangeAlt, FaCalendarAlt } from "react-icons/fa";
 import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {DailyActivitiesContext} from "./HomePage"
+import { DailyActivitiesContext } from "../Trip/page";
 import toast, { Toaster } from 'react-hot-toast';
 
 
