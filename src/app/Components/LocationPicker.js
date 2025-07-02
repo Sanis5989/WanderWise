@@ -13,7 +13,19 @@ export default function LocationPicker() {
   //context for daily activities
    const { setDailyActivities } = useContext(DailyActivitiesContext);
 
-  const locations = [
+ const locationAirport = {
+  Sydney: "SYD",
+  Melbourne: "MEL",
+  Brisbane: "BNE",
+  "Gold Coast": "OOL",
+  Perth: "PER",
+  Adelaide: "ADL",
+  Canberra: "CBR",
+  Darwin: "DRW",
+  Hobart: "HBA"
+};
+
+const locations = [
     "Sydney",
     "Melbourne",
     "Brisbane",
@@ -24,6 +36,7 @@ export default function LocationPicker() {
     "Darwin",
     "Hobart",
   ];
+
 
   const [from, setFrom] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
@@ -125,22 +138,47 @@ const handleGeolocation = () => {
   //function to create detailed itenary
   const search = async ()=>{
     console.log(from,to,startDate,endDate)
-    if(from != "" && to != "" ){
-      const input = {from,to,startDate,endDate}
-        const res = await fetch("/api/openai", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input })
-        });
-        console.log("open")
-        const data = await res.json();
-        console.log("OpenAI Response:", data);
-        setDailyActivities(data)
+    
+
+
+    // if(from != "" && to != "" ){
+    //   const input = {from,to,startDate,endDate}
+    //     const res = await fetch("/api/openai", {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({ input })
+    //     });
+    //     console.log("open")
+    //     const data = await res.json();
+    //     console.log("OpenAI Response:", data);
+    //     setDailyActivities(data)
+    // }
+    // else{
+    //   console.log("inpit data");
+    //   toast.error("Please select a destination.")
+    // }
+    // const url = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
+
+    // const url = 'https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=SYD&toEntityId=BNE&departDate=2025-07-02&returnDate=2025-07-06'
+
+    const url = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': 'b9d55d4b9fmsh4bb6585660a3de9p14365ejsn0c479af7f02f',
+        'x-rapidapi-host': 'flights-sky.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
     }
-    else{
-      console.log("inpit data");
-      toast.error("Please select a destination.")
-    }
+    console.log(url)
+
   }
 
   return (

@@ -22,7 +22,7 @@ export default function HeroSection() {
 
   return (
     <>
-    <div className=" pt-16 max-w-[75%] mx-auto">
+    <div className=" py-16 max-w-[75%] mx-auto">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10">
         {/* Text Content */}
         <motion.div
@@ -31,11 +31,11 @@ export default function HeroSection() {
           transition={{ duration: 0.8 }}
           className="text-center md:text-left space-y-4"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground">
             Your Smart Travel Companion
           </h1>
-          <h2 className="text-2xl text-blue-600">Powered by AI</h2>
-          <p className="text-gray-600 max-w-md">
+          <h2 className="text-2xl text-primary">Powered by AI</h2>
+          <p className="text-secondary-foreground max-w-md">
             Plan trips in seconds – from flights to daily adventures. Wanderwise builds your perfect travel experience powered by the latest AI.
           </p>
           <button onClick={()=>router.push("./Trip")} className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300 cursor-pointer">
