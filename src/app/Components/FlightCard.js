@@ -14,7 +14,7 @@ export default function FlightCard({ flight }) {
     new Date(datetime).toLocaleDateString();
 
   return (
-    <div className="p-4 border rounded-xl shadow-md bg-white max-w-3xl mx-auto space-y-4">
+    <div className="border border-gray-200 rounded-lg shadow-sm p-4  bg-background max-w-3xl mx-auto space-y-4 mb-auto">
       <h2 className="text-xl font-semibold text-gray-800">Round Trip Flight</h2>
 
       {legs.map((leg, index) => (

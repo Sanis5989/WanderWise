@@ -35,10 +35,10 @@ const useCases = [
 
 export default function UseCases() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-muted">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          What Can You Use <span className="text-blue-600">Wanderwise</span> For?
+          What Can You Use <span className="text-primary">Wanderwise</span> For?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -49,7 +49,7 @@ export default function UseCases() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg">{item.title}</h3>
-                <p className="text-gray-600 text-sm">{item.description}</p>
+                <p className="text-muted-foreground text-sm">{item.description}</p>
               </div>
             </div>
           ))}

@@ -59,11 +59,11 @@ const featuredDeals = [
 
 export default function FeaturedCards() {
   return (
-    <div className=" pb-12 px-4 md:px-12 cursor-pointer">
+    <div className=" pb-12 px-4 md:px-12 ">
       <h2 className="text-3xl font-bold text-center mb-8">Exciting Featured Adventure Deals for Your Next Trip</h2>
       <div className="flex flex-wrap gap-6 justify-center">
         {featuredDeals.map((deal, index) => (
-          <div key={index} className="bg-white text-black w-[300px] rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+          <div key={index} className="bg-card w-[300px] rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer dark:hover:shadow-gray-700">
             <div className="relative w-full h-52">
               <Image
                 src={deal.image}
@@ -71,13 +71,13 @@ export default function FeaturedCards() {
                 fill
                 className="object-cover"
               />
-              <span className="absolute top-3 left-3 bg-yellow-400 text-xs font-semibold px-3 py-1 rounded-md shadow">
+              <span className="absolute top-3 left-3 bg-yellow-400 text-xs text-black font-semibold px-3 py-1 rounded-md shadow">
                 {deal.tag}
               </span>
             </div>
-            <div className="p-4">
+            <div className="p-4 text-card-foreground">
               <h3 className="font-semibold text-sm mb-2">{deal.title}</h3>
-              <p className="text-sm text-gray-700 mb-3">{deal.description}</p>
+              <p className="text-sm -700 mb-3">{deal.description}</p>
               {/* <p className="font-bold text-yellow-600 text-sm">{deal.price}</p> */}
             </div>
           </div>

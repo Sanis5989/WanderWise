@@ -2239,26 +2239,27 @@ const dummyFlightsResponse = {
 
     // const url = 'https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=SYD&toEntityId=BNE&departDate=2025-07-02&returnDate=2025-07-06'
 
-    // const url = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
-    // const options = {
-    //   method: 'GET',
-    //   headers: {
-    //     'x-rapidapi-key': 'b9d55d4b9fmsh4bb6585660a3de9p14365ejsn0c479af7f02f',
-    //     'x-rapidapi-host': 'flights-sky.p.rapidapi.com'
-    //   }
-    // };
+    const url = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': 'b9d55d4b9fmsh4bb6585660a3de9p14365ejsn0c479af7f02f',
+        'x-rapidapi-host': 'flights-sky.p.rapidapi.com'
+      }
+    };
 
-    // try {
-    //   const response = await fetch(url, options);
-    //   const result = await response.text();
-    //   console.log(result);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    // console.log(url)
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      setFlight(result?.data.itineraries[0])
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(url)
 
-    setFlight(dummyFlightsResponse.data.itineraries[0])
-    console.log(dummyFlightsResponse.data.itineraries[0])
+    // setFlight(dummyFlightsResponse.data.itineraries[0])
+    console.log(flight)
 
   }
 
