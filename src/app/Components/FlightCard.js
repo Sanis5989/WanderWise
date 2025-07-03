@@ -1,8 +1,11 @@
-// components/FlightCard.tsx
+"use client"
 import Image from "next/image";
+import { useContext, useEffect } from "react";
+import { DailyActivitiesContext } from "../Trip/page";
+// import { FlightContext } from "../Trip/page";
 
-export default function FlightCard({ flight }) {
-  const { price, legs } = flight;
+export default function FlightCard({flightData}) {
+  
 
   const formatTime = (datetime) =>
     new Date(datetime).toLocaleTimeString([], {
@@ -13,7 +16,18 @@ export default function FlightCard({ flight }) {
   const formatDate = (datetime) =>
     new Date(datetime).toLocaleDateString();
 
+
+  // const { price, legs } = flightData;
+
+  const price = flightData?.price;
+  const legs = flightData?.legs
+
+  useEffect(()=>{
+    console.log(flightData)
+  },[flightData])
+
   return (
+    flightData ? 
     <div className="border border-gray-200 rounded-lg shadow-sm p-4  bg-background max-w-3xl mx-auto space-y-4 mb-auto">
       <h2 className="text-xl font-semibold text-gray-800">Round Trip Flight</h2>
 
@@ -54,10 +68,11 @@ export default function FlightCard({ flight }) {
         <span className="text-lg font-bold text-gray-800">
           {price.formatted}
         </span>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 ">
           Book Now
         </button>
       </div>
-    </div>
+    </div> : <></>
+    
   );
 }

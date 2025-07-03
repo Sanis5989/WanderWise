@@ -6,19 +6,20 @@ import { createContext, useState } from 'react'
 
 
 export  const DailyActivitiesContext = createContext();
-export const FlightContext = createContext();
+
 
 export default function page() {
       const [dailyActivities,setDailyActivities] = useState();
       const [flight, setFlight] = useState();
+      const [loadingG, setLoadingG] =useState(false);
 
   return (
     <div>
-            <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities}}>
-              <FlightContext.Provider value={{flight,setFlight}}>
+            <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities,flight,setFlight, loadingG, setLoadingG}}>
+              {/* <FlightContext.Provider value={{flight,setFlight}}> */}
                 <LocationPicker/>
-                <ItineraryList data={dailyActivities} flight={flight}/>
-              </FlightContext.Provider>
+                <ItineraryList data={dailyActivities} flightData={flight}/>
+              {/* </FlightContext.Provider> */}
             </DailyActivitiesContext.Provider>
           </div>
   )
