@@ -1,20 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FlightCard from "./FlightCard";
-
-// // Replace this with your actual fetch
-// const fetchItinerary = async () => {
-//   // Simulate loading delay
-//   await new Promise((res) => setTimeout(res, 2000));
-//   const res = await fetch("/api/mock-itinerary"); // replace with your endpoint
-//   return await res.json();
-// };
+import { DailyActivitiesContext } from "../Trip/page";
 
 export default function ItineraryList({data,flightData}) {
   const [itinerary, setItinerary] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tempFlight, setTempFlight] =useState();
   
+  
+  const {loadingG} = useContext(DailyActivitiesContext)
 
   useEffect(() => {
   //   const dummdata = [
@@ -151,11 +146,22 @@ export default function ItineraryList({data,flightData}) {
     console.log("tguis",flightData)
   },[flightData])
 
+  useEffect(()=>{
+    setLoading(loadingG)
+  },[loadingG])
+  
+
+
   
 
   return (
     <div className="p-6 max-w-[70%] mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Your Trip Plan</h2>
+      {
+        loading || !itinerary ? <h2 className="text-2xl font-bold mb-4">Generating Your Trip Plan</h2>
+          :
+        <h2 className="text-2xl font-bold mb-4">Your Complete Trip Plan</h2>
+      }
+      
       <div className="flex flex-col md:flex-row md:gap-10">
         
           {/* displaying trip only if itenary has been loaded */}
