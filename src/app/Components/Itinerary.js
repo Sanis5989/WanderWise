@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import FlightCard from "./FlightCard";
 
 // // Replace this with your actual fetch
 // const fetchItinerary = async () => {
@@ -9,7 +10,7 @@ import React, { useEffect, useState } from "react";
 //   return await res.json();
 // };
 
-export default function ItineraryList({data}) {
+export default function ItineraryList({data,flight}) {
   const [itinerary, setItinerary] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -148,7 +149,8 @@ export default function ItineraryList({data}) {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Your Trip Plan</h2>
-
+      {flight ? <FlightCard flight={flight}/> : <p>Flighnt no</p>}
+      
         {/* displaying trip only if itenary has been loaded */}
       {loading || !itinerary
         ? Array.from({ length: 4 }).map((_, i) => (
@@ -179,6 +181,7 @@ export default function ItineraryList({data}) {
               </ul>
             </div>
           ))}
+        
     </div>
   );
 }

@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    allowedDevOrigins:['local-origin.dev', '*.local-origin.dev','http://192.168.*.*:3000',]
+    allowedDevOrigins:['local-origin.dev', '*.local-origin.dev','http://192.168.*.*:3000',],
+    images: {
+    domains: ['logos.skyscnr.com'],
+  },
 };
 
 export default nextConfig;
