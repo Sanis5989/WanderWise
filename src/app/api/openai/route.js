@@ -57,9 +57,9 @@ Return ONLY valid JSON following this structure:
 //function to generate itenary prompting openai model
 async function generateItinerary(input) {
   try {
-    const userPrompt = `
-I am planning a trip from ${input.from} to ${input.to}.
+    const userPrompt =  `I am planning a trip from ${input.from} to ${input.to}.
 The travel dates are from ${input.startDate} to ${input.endDate}.
+And the flight details are ${JSON.stringify(input.flight)}
 Generate the full itinerary including:
 - Daily plans with activities, local attractions, and recommended food or cultural spots.
 Be creative, but keep it realistic and travel-efficient.
@@ -76,8 +76,9 @@ Return ONLY valid JSON.
     });
 
     const content = response.choices[0]?.message?.content;
+    // console.log(content)
     if (!content) throw new Error("No content returned");
-
+    
     return JSON.parse(content);
   } catch (error) {
     console.error("Itinerary generation failed:", error);

@@ -151,9 +151,6 @@ export default function ItineraryList({data,flightData}) {
   },[loadingG])
   
 
-
-  
-
   return (
     <div className="p-6 max-w-[70%] mx-auto">
       {
