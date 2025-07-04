@@ -4,6 +4,7 @@ import FlightCard from "./FlightCard";
 import { DailyActivitiesContext } from "../Trip/page";
 import HotelList from "./HotelList";
 
+
 export default function ItineraryList({data,flightData ,hotel}) {
   const [itinerary, setItinerary] = useState([]);
   const [loading, setLoading] = useState(true);

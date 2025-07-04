@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowRight,FaArrowCircleLeft } from "react-icons/fa";
 
 export default function HotelList({ hotels }) {
   const [current, setCurrent] = useState(0);
@@ -17,21 +18,23 @@ export default function HotelList({ hotels }) {
   const transition = { type: 'spring', stiffness: 300, damping: 30 };
 
   return (
-    <div className="relative max-w-md mx-auto my-10">
-      <div className="flex justify-between items-center mb-4 px-2">
+    <>
+      {(hotels?.length > 1) ?
+         <div className="relative max-w-md mx-auto my-10 ">
+      <div className="flex justify-between items-center mb-4 px-2 ">
         <h2 className="text-xl font-bold">Top Hotels</h2>
-        <div className="space-x-2">
-          <button
+        <div className="space-x-2 ">
+          {/* <button
             onClick={prevCard}
             className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
           >
-            ◀
-          </button>
+            <FaArrowCircleLeft/>
+          </button> */}
           <button
             onClick={nextCard}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+            className="cursor-pointer"
           >
-            ▶
+            <FaArrowRight size={25} color='black'/>
           </button>
         </div>
       </div>
@@ -46,7 +49,7 @@ export default function HotelList({ hotels }) {
             transition={transition}
             className="absolute w-full h-full"
           >
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="border border-gray-200 rounded-lg shadow-sm  bg-background overflow-hidden">
               <Image
                 src={hotels[current]?.image}
                 alt={hotels[current]?.name}
@@ -58,7 +61,7 @@ export default function HotelList({ hotels }) {
                 <h3 className="text-lg font-semibold">{hotels[current]?.name}</h3>
                 <p className="text-sm text-gray-600">{hotels[current]?.location}</p>
                 <p className="text-blue-600 font-bold my-2">
-                  AUD {hotels[current]?.price}
+                   {hotels[current]?.price}
                 </p>
                 <a
                   href={hotels[current]?.url}
@@ -73,6 +76,13 @@ export default function HotelList({ hotels }) {
           </motion.div>
         </AnimatePresence>
       </div>
+    </div> 
+    :
+    <div>
+      
     </div>
+      }
+    </>
+   
   );
 }
