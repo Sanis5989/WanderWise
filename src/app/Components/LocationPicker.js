@@ -11,7 +11,7 @@ import { addDays } from "date-fns";
 export default function LocationPicker() {
 
   //context for daily activities
-  const { setDailyActivities ,setFlight ,flight, setLoadingG} = useContext(DailyActivitiesContext);
+  const { setDailyActivities ,setFlight ,flight, setLoadingG, setHotel} = useContext(DailyActivitiesContext);
 
   const locationAirport = {
     Sydney: "SYD",
@@ -23,6 +23,17 @@ export default function LocationPicker() {
     Canberra: "CBR",
     Darwin: "DRW",
     Hobart: "HBA"
+  };
+  const locationHotels = {
+    Sydney: "eyJjaXR5X25hbWUiOiJTeWRuZXkiLCJjb3VudHJ5IjoiQXVzdHJhbGlhIiwiZGVzdF9pZCI6IjkwMDA3MzA2OSIsImRlc3RfdHlwZSI6ImxhbmRtYXJrIn0=",
+    Melbourne: "eyJjaXR5X25hbWUiOiJNZWxib3VybmUiLCJjb3VudHJ5IjoiVW5pdGVkIFN0YXRlcyIsImRlc3RfaWQiOiIyMDAyMzE2MyIsImRlc3RfdHlwZSI6ImNpdHkifQ==",
+    Brisbane: "eyJjaXR5X25hbWUiOiJCcmlzYmFuZSIsImNvdW50cnkiOiJBdXN0cmFsaWEiLCJkZXN0X2lkIjoiMTg0MCIsImRlc3RfdHlwZSI6ImRpc3RyaWN0In0=",
+    "Gold Coast": "eyJjaXR5X25hbWUiOiJHb2xkIENvYXN0IiwiY291bnRyeSI6IkF1c3RyYWxpYSIsImRlc3RfaWQiOiItMTU3NTczNiIsImRlc3RfdHlwZSI6ImNpdHkifQ==",
+    Perth: "eyJjaXR5X25hbWUiOiJQZXJ0aCIsImNvdW50cnkiOiJBdXN0cmFsaWEiLCJkZXN0X2lkIjoiLTE1OTQ2NzUiLCJkZXN0X3R5cGUiOiJjaXR5In0=",
+    Adelaide: "eyJjaXR5X25hbWUiOiJBZGVsYWlkZSIsImNvdW50cnkiOiJBdXN0cmFsaWEiLCJkZXN0X2lkIjoiLTE1NTUxODgiLCJkZXN0X3R5cGUiOiJjaXR5In0=",
+    Canberra: "eyJjaXR5X25hbWUiOiJDYW5iZXJyYSIsImNvdW50cnkiOiJBdXN0cmFsaWEiLCJkZXN0X2lkIjoiLTE1NjM5NTIiLCJkZXN0X3R5cGUiOiJjaXR5In0=",
+    Darwin: "eyJjaXR5X25hbWUiOiJEYXJ3aW4iLCJjb3VudHJ5IjoiQXVzdHJhbGlhIiwiZGVzdF9pZCI6Ii0xNTY5MDU4IiwiZGVzdF90eXBlIjoiY2l0eSJ9",
+    Hobart: "eyJjaXR5X25hbWUiOiJIb2JhcnQiLCJjb3VudHJ5IjoiQXVzdHJhbGlhIiwiZGVzdF9pZCI6Ii0xNTc4NDQwIiwiZGVzdF90eXBlIjoiY2l0eSJ9"
   };
 
 const locations = [
@@ -43,6 +54,7 @@ const locations = [
   const [to, setTo] = useState("");
   const [startDate, setStartDate] = useState(addDays(new Date(),1));
   const [endDate, setEndDate] = useState(addDays(new Date(),2));
+  const [resHotels, setResHotels] =useState([]);
 
   //function to handle current location
   const handleGeolocation = () => {
@@ -2228,10 +2240,38 @@ const locations = [
 
   setLoadingG(true);  
 
+  const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
+  const hotelOptions = {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': process.env.NEXT_PUBLIC_HOTEL_API ,
+      'x-rapidapi-host': 'booking-com18.p.rapidapi.com'
+    }
+  };
 
+  try {
+    const hotelResponse = await fetch(hotelUrl, hotelOptions);
+    const result = await hotelResponse.json();
+
+    //formating hotels json response
+    const cleanResult = (hotelData) => {
+      return hotelData?.data?.slice(0, 3).map((hotel) => ({
+        name: hotel.name,
+        image: hotel.photoUrls?.[0]?.replace("square60", "square240"),
+        price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
+        location: hotel.wishlistName || "Location not available",
+        url: `https://www.booking.com/hotel/${hotel.id}.html` // Replace with your correct booking link
+      }));
+    };
+    console.log(cleanResult(result));
+    setResHotels(cleanResult(result));
+    setHotel(cleanResult(result));
+  } 
+  catch (error) {
+    console.error(error);
+  }
 
   const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
-  
   const flightOptions = {
     method: "GET",
     headers: {
@@ -2239,9 +2279,6 @@ const locations = [
       "x-rapidapi-host": "flights-sky.p.rapidapi.com",
     },
   };
-
- 
-
   try {
     // Fetch flight first
     const flightRes = await fetch(flightUrl, flightOptions);
@@ -2278,15 +2315,16 @@ const locations = [
     console.log("OpenAI Response:", openAIData);
     setDailyActivities(openAIData);
 
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Search error:", error);
     toast.error("An error occurred while fetching travel data.");
   }
   }
 
-  // useEffect(()=>{
-  //   console.log("asdlasjkd",flight)
-  // },[flight])
+  useEffect(()=>{
+    console.log("asdlasjkd",flight)
+  },[flight])
 
   
 

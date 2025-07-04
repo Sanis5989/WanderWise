@@ -2,8 +2,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import FlightCard from "./FlightCard";
 import { DailyActivitiesContext } from "../Trip/page";
+import HotelList from "./HotelList";
 
-export default function ItineraryList({data,flightData}) {
+export default function ItineraryList({data,flightData ,hotel}) {
   const [itinerary, setItinerary] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tempFlight, setTempFlight] =useState();
@@ -196,8 +197,14 @@ export default function ItineraryList({data,flightData}) {
               ))}
               </div>
 
+              <div>
+
+              
               {/* dusplaying flight */}
-              <FlightCard flightData={tempFlight}/> 
+                <FlightCard flightData={tempFlight}/> 
+                {/* displaying hotels */}
+                <HotelList hotels={hotel}/>
+              </div>
             </div>
         
     </div>
