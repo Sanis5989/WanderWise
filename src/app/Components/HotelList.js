@@ -11,9 +11,6 @@ export default function HotelList({ hotels }) {
     setCurrent((prev) => (prev + 1) % hotels.length);
   };
 
-  const prevCard = () => {
-    setCurrent((prev) => (prev - 1 + hotels.length) % hotels.length);
-  };
 
   const transition = { type: 'spring', stiffness: 300, damping: 30 };
 
