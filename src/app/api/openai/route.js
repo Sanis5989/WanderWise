@@ -59,8 +59,9 @@ async function generateItinerary(input) {
   try {
     const userPrompt =  `I am planning a trip from ${input.from} to ${input.to}.
 The travel dates are from ${input.startDate} to ${input.endDate}.
-And the flight details are ${JSON.stringify(input.flight)}
-Generate the full itinerary including considering travel times:
+And the flight details are ${JSON.stringify(input.flight)}.
+And the hotel details are ${JSON.stringify(input.hotel)}
+Generate the full itinerary including considering travel times from hotel location:
 - Daily plans with activities, local attractions, and recommended food or cultural spots.
 Be creative, but keep it realistic and travel-efficient.
 Return ONLY valid JSON.

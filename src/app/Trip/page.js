@@ -10,7 +10,7 @@ import FeaturedCards from '../Components/FeaturedCards';
 export  const DailyActivitiesContext = createContext();
 
 
-export default function page() {
+export default function Page() {
       const [dailyActivities,setDailyActivities] = useState();
       const [flight, setFlight] = useState();
       const [loadingG, setLoadingG] =useState(false);

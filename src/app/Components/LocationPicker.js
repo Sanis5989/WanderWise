@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DailyActivitiesContext} from "../Trip/page";
 import toast, { Toaster } from 'react-hot-toast';
-import { addDays } from "date-fns";
+import { addDays,format } from "date-fns";
 
 export default function LocationPicker() {
 
@@ -2249,48 +2249,55 @@ const locations = [
     }
   };
 
-  try {
-    const hotelResponse = await fetch(hotelUrl, hotelOptions);
-    const result = await hotelResponse.json();
-
-    //formating hotels json response
-    const cleanResult = (hotelData) => {
-      return hotelData?.data?.slice(0, 3).map((hotel) => ({
-        name: hotel.name,
-        image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
-        price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
-        location: hotel.wishlistName || "Location not available",
-        url: `https://www.booking.com/hotel/${hotel.id}.html` // Replace with your correct booking link
-      }));
-    };
-    console.log(cleanResult(result));
-    setResHotels(cleanResult(result));
-    setHotel(cleanResult(result));
-  } 
-  catch (error) {
-    console.error(error);
-  }
-
   const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
   const flightOptions = {
     method: "GET",
     headers: {
-      "x-rapidapi-key": "b9d55d4b9fmsh4bb6585660a3de9p14365ejsn0c479af7f02f",
+      "x-rapidapi-key": process.env.NEXT_PUBLIC_FLIGHT_API,
       "x-rapidapi-host": "flights-sky.p.rapidapi.com",
     },
   };
-  try {
-    // Fetch flight first
-    // const flightRes = await fetch(flightUrl, flightOptions);
-    // const flightData = await flightRes.json();
-    // console.log("Flight API Response:", flightData);
+  
 
-    // const flight = flightData?.data?.itineraries?.[0];
-    // const fli = flightData?.data?.itineraries?.[0]?.legs;
-    // console.log(fli)
-    // setFlight(flight);
-    setFlight(dummyFlightsResponse.data.itineraries?.[0])
-    const fli = dummyFlightsResponse?.data?.itineraries?.[0]?.legs;
+ try {
+  // Start both requests
+  const hotelRequest = fetch(hotelUrl, hotelOptions);
+  const flightRequest = fetch(flightUrl, flightOptions);
+
+  // Wait for both to complete
+  const [hotelResponse, flightResponse] = await Promise.all([hotelRequest, flightRequest]);
+
+  // Parse JSON responses
+  const hotelData = await hotelResponse.json();
+  const flightData = await flightResponse.json();
+
+  // --- Hotel ---
+  const cleanResult = (hotelData) => {
+    return hotelData?.data?.slice(0, 5).map((hotel) => ({
+      name: hotel.name,
+      image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
+      price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
+      location: hotel.wishlistName || "Location not available",
+      stayDate: [
+        format(startDate, "dd MMM yyyy"),
+        format(endDate, "dd MMM yyyy")
+      ],
+      url: `https://www.booking.com/hotel/${hotel.id}.html`
+    }));
+  };
+
+    const formattedHotels = cleanResult(hotelData);
+    setResHotels(formattedHotels);
+    setHotel(formattedHotels);
+
+    // --- Flight ---
+    const flight = flightData?.data?.itineraries?.[0];
+    const fli = flightData?.data?.itineraries?.[0]?.legs;
+
+    console.log("Flight Legs:", fli);
+    setFlight(flight);
+
+    
 
     if (!flight) {
       toast.error("No flights found.");
@@ -2304,6 +2311,7 @@ const locations = [
       startDate,
       endDate,
       flight:{...fli},
+      hotel:formattedHotels[0]
     };
 
     // Now call OpenAI with updated input
@@ -2317,18 +2325,12 @@ const locations = [
     console.log("OpenAI Response:", openAIData);
     setDailyActivities(openAIData);
 
-  } 
-  catch (error) {
-    console.error("Search error:", error);
-    toast.error("An error occurred while fetching travel data.");
-  }
+  } catch (error) {
+    console.error("Error fetching hotels, flights or openai:", error);
+    toast.error("Something went wrong while fetching data.");
   }
 
-  useEffect(()=>{
-    console.log("asdlasjkd",flight)
-  },[flight])
-
-  
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 py-6">

@@ -57,7 +57,12 @@ export default function HotelList({ hotels }) {
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{hotels[current]?.name}</h3>
                 <p className="text-sm text-gray-600">{hotels[current]?.location}</p>
-                <p className="text-blue-600 font-bold my-2">
+                <p className="text-sm text-gray-600">{hotels[current]?.stayDate[0]} - {hotels[current]?.stayDate[1]} {
+                  Math.ceil(
+                    (new Date(hotels[current]?.stayDate[1]) - new Date(hotels[current]?.stayDate[0])) / (1000 * 60 * 60 * 24)
+                  )+1
+                  }{" "} days</p>
+                <p className="font-bold my-2">
                    {hotels[current]?.price}
                 </p>
                 <a
