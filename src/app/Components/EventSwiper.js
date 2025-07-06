@@ -10,7 +10,7 @@ import { DailyActivitiesContext } from "../Trip/page";
 
 export default function EventSwiper() {
 
-   const {events} =useContext(DailyActivitiesContext)
+   const {events ,loadingG} =useContext(DailyActivitiesContext)
 
   console.log("events")
   const [index, setIndex] = useState(0);
@@ -21,7 +21,7 @@ export default function EventSwiper() {
   return (
     <>
         {
-            events.length >= 1 ? <div className="relative max-w-4xl mx-auto p-4">
+            events.length >= 1 && !loadingG? <div className="relative max-w-4xl mx-auto p-4">
         <div className="flex justify-between items-center mb-2">
             <button onClick={handlePrev} className="p-2 rounded-full bg-gray-200 hover:bg-gray-300">
             <ChevronLeft />
@@ -69,7 +69,7 @@ export default function EventSwiper() {
         </motion.div>
         </div> 
         :
-        <> No events yata</>
+        <> </>
 
             
         }

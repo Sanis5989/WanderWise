@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight,FaArrowCircleLeft } from "react-icons/fa";
+import { DailyActivitiesContext } from '../Trip/page';
 
 export default function HotelList({ hotels }) {
   const [current, setCurrent] = useState(0);
@@ -11,12 +12,14 @@ export default function HotelList({ hotels }) {
     setCurrent((prev) => (prev + 1) % hotels.length);
   };
 
+  const {loadingG} = useContext(DailyActivitiesContext)
+
 
   const transition = { type: 'spring', stiffness: 300, damping: 30 };
 
   return (
     <>
-      {(hotels?.length > 1) ?
+      {(hotels?.length > 1) && !loadingG ?
          <div className="relativemx-auto my-10 ">
       <div className="flex justify-between items-center mb-4 px-2 ">
         <h2 className="text-xl font-bold">Top Hotels</h2>

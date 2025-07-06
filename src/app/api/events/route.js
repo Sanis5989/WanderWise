@@ -2,8 +2,8 @@ import { parse, isBefore, isAfter, isWithinInterval, areIntervalsOverlapping } f
 
 export async function POST(req) {
   try {
-    const { data } = await req.json();
-    const result = await fetchEvents(data?.city,data?.startDate,data?.endDate);
+    const { eventsRawData } = await req.json();
+    const result = await fetchEvents(eventsRawData?.city,eventsRawData?.startDate,eventsRawData?.endDate);
 
     if (!result) {
       return new Response(

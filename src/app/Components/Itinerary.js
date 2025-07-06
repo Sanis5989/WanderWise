@@ -5,7 +5,7 @@ import { DailyActivitiesContext } from "../Trip/page";
 import HotelList from "./HotelList";
 import { ChevronDown, ChevronUp } from "lucide-react"; 
 import EventSwiper from "./EventSwiper";
-
+import FeaturedCards from "./FeaturedCards";
 
 export default function ItineraryList({data,flightData ,hotel}) {
   const [itinerary, setItinerary] = useState([]);
@@ -157,16 +157,22 @@ export default function ItineraryList({data,flightData ,hotel}) {
     console.log("tguis",flightData)
   },[flightData])
 
-  useEffect(()=>{
-    setLoading(loadingG)
-    console.log("itenary",itinerary)
-  },[loadingG])
-  
+
 
   return (
     <div className="p-6 max-w-[70%] mx-auto">
-      {
-        loading || !itinerary ? <h2 className="text-2xl font-bold mb-4">Generating Your Trip Plan</h2>
+      { !itinerary && !loadingG ? 
+        
+        <div className="text-center mt-10">
+            {/* <img src="/empty-state.svg" className="w-1/2 mx-auto mb-4" alt="Search Prompt" /> */}
+            <h3 className="text-3xl font-semibold">Select Destination and Date to get Started</h3>
+            <p className="text-lg mb-4">Or explore our popular trip ideas below</p>
+            <FeaturedCards/>
+        </div>
+        :
+        <>
+           {
+        loadingG || !itinerary ? <h2 className="text-2xl font-bold mb-4">Generating Your Trip Plan</h2>
           :
         <h2 className="text-2xl font-bold mb-4">Your Complete Trip Plan</h2>
       }
@@ -244,7 +250,10 @@ export default function ItineraryList({data,flightData ,hotel}) {
                  <EventSwiper events={events} /> 
 
               </div>
-            </div>
+        </div>
+        </>
+
+      }
         
     </div>
   );

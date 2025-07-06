@@ -16,6 +16,8 @@ export default function FlightCard({flightData}) {
   const formatDate = (datetime) =>
     new Date(datetime).toLocaleDateString();
 
+  const {loadingG} = useContext(DailyActivitiesContext)
+
 
   // const { price, legs } = flightData;
 
@@ -27,7 +29,7 @@ export default function FlightCard({flightData}) {
   },[flightData])
 
   return (
-    flightData ? 
+    flightData && !loadingG ? 
     <div className="border border-gray-200 rounded-lg shadow-sm p-4  bg-background max-w-3xl mx-auto space-y-4 mb-auto">
       <h2 className="text-xl font-semibold text-gray-800">Round Trip Flight</h2>
 

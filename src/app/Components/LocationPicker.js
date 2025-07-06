@@ -2226,129 +2226,131 @@ export default function LocationPicker() {
     toast.error("Please select a destination.");
     return;
   }
+  setLoadingG(true)
 
-//   // Validate date range (at least 1 day apart)
-//   const start = new Date(startDate);
-//   const end = new Date(endDate);
-//   const diffInMs = end - start;
-//   const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+  // Validate date range (at least 1 day apart)
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const diffInMs = end - start;
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-//   if (diffInDays < 1) {
-//     toast.error("Please select an end date at least 1 day after the start date.");
-//     return;
-//   }
+  if (diffInDays < 1) {
+    toast.error("Please select an end date at least 1 day after the start date.");
+    return;
+  }
 
-//   setLoadingG(true);  
+  setLoadingG(true);  
 
-//   const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
-//   const hotelOptions = {
-//     method: 'GET',
-//     headers: {
-//       'x-rapidapi-key': process.env.NEXT_PUBLIC_HOTEL_API ,
-//       'x-rapidapi-host': 'booking-com18.p.rapidapi.com'
-//     }
-//   };
+  const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
+  const hotelOptions = {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': process.env.NEXT_PUBLIC_HOTEL_API ,
+      'x-rapidapi-host': 'booking-com18.p.rapidapi.com'
+    }
+  };
 
-//   const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
-//   const flightOptions = {
-//     method: "GET",
-//     headers: {
-//       "x-rapidapi-key": process.env.NEXT_PUBLIC_FLIGHT_API,
-//       "x-rapidapi-host": "flights-sky.p.rapidapi.com",
-//     },
-//   };
+  const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
+  const flightOptions = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": process.env.NEXT_PUBLIC_FLIGHT_API,
+      "x-rapidapi-host": "flights-sky.p.rapidapi.com",
+    },
+  };
+
   
 
-//  try {
-//   // Start both requests
-//   const hotelRequest = fetch(hotelUrl, hotelOptions);
-//   const flightRequest = fetch(flightUrl, flightOptions);
+ try {
 
-//   // Wait for both to complete
-//   const [hotelResponse, flightResponse] = await Promise.all([hotelRequest, flightRequest]);
-
-//   // Parse JSON responses
-//   const hotelData = await hotelResponse.json();
-//   const flightData = await flightResponse.json();
-
-//   // --- Hotel ---
-//   const cleanResult = (hotelData) => {
-//     return hotelData?.data?.slice(0, 5).map((hotel) => ({
-//       name: hotel.name,
-//       image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
-//       price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
-//       location: hotel.wishlistName || "Location not available",
-//       stayDate: [
-//         format(startDate, "dd MMM yyyy"),
-//         format(endDate, "dd MMM yyyy")
-//       ],
-//       url: `https://www.booking.com/hotel/${hotel.id}.html`
-//     }));
-//   };
-
-//     const formattedHotels = cleanResult(hotelData);
-//     setResHotels(formattedHotels);
-//     setHotel(formattedHotels);
-
-//     // --- Flight ---
-//     const flight = flightData?.data?.itineraries?.[0];
-//     const fli = flightData?.data?.itineraries?.[0]?.legs;
-
-//     console.log("Flight Legs:", fli);
-//     setFlight(flight);
-
-    
-
-//     if (!flight) {
-//       toast.error("No flights found.");
-//       return;
-//     }
-
-//     // Build input including flight
-//     const input = {
-//       from,
-//       to,
-//       startDate,
-//       endDate,
-//       flight:{...fli},
-//       hotel:formattedHotels[0]
-//     };
-
-//     // Now call OpenAI with updated input
-//     const openAIRes = await fetch("/api/openai", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ input }),
-//     });
-
-//     const openAIData = await openAIRes.json();
-//     console.log("OpenAI Response:", openAIData);
-//     setDailyActivities(openAIData);
-
-//   } catch (error) {
-//     console.error("Error fetching hotels, flights or openai:", error);
-//     toast.error("Something went wrong while fetching data.");
-//   }
-try {
-  const data =
+  const eventsRawData =
   {
     city: to,
     startDate:startDate,
     endDate:endDate
   }
-
-  const eventsApiRes = await fetch("/api/events",{
+  
+  const eventsOptions = {
     method:"POST",
     headers:{"Content-type" : "application/json"},
-    body: JSON.stringify({data})
-  })
+    body: JSON.stringify({eventsRawData})
+  }
+  // Start all requests
+  const hotelRequest = fetch(hotelUrl, hotelOptions);
+  const flightRequest = fetch(flightUrl, flightOptions);
+  const eventsApiRequest = fetch("/api/events",eventsOptions)
 
-  const eventsData = await eventsApiRes.json();
+
+  // Wait for both to complete
+  const [hotelResponse, flightResponse, eventsResponse] = await Promise.all([hotelRequest, flightRequest, eventsApiRequest]);
+
+  // Parse JSON responses
+  const hotelData = await hotelResponse.json();
+  const flightData = await flightResponse.json();
+  const eventsData = await eventsResponse.json();
+
   console.log(eventsData)
   setEvents(eventsData)
-} catch (error) {
-  toast.error(error)
-}
+
+  // --- Hotel ---
+  const cleanResult = (hotelData) => {
+    return hotelData?.data?.slice(0, 5).map((hotel) => ({
+      name: hotel.name,
+      image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
+      price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
+      location: hotel.wishlistName || "Location not available",
+      stayDate: [
+        format(startDate, "dd MMM yyyy"),
+        format(endDate, "dd MMM yyyy")
+      ],
+      url: `https://www.booking.com/hotel/${hotel.id}.html`
+    }));
+  };
+
+    const formattedHotels = cleanResult(hotelData);
+    setResHotels(formattedHotels);
+    setHotel(formattedHotels);
+
+    // --- Flight ---
+    const flight = flightData?.data?.itineraries?.[0];
+    const fli = flightData?.data?.itineraries?.[0]?.legs;
+
+    console.log("Flight Legs:", fli);
+    setFlight(flight);
+
+    if (!flight) {
+      toast.error("No flights found.");
+      return;
+    }
+
+    // Build input including flight
+    const input = {
+      from,
+      to,
+      startDate,
+      endDate,
+      flight:{...fli},
+      hotel:formattedHotels[0]
+    };
+
+    // Now call OpenAI with updated input
+    const openAIRes = await fetch("/api/openai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ input }),
+    });
+
+    const openAIData = await openAIRes.json();
+    console.log("OpenAI Response:", openAIData);
+    setDailyActivities(openAIData);
+
+  } catch (error) {
+    console.error("Error fetching hotels, flights or openai:", error);
+    toast.error("Something went wrong while fetching data.");
+  }
+  finally{
+    setLoadingG(false)
+  }
 
   }
 
