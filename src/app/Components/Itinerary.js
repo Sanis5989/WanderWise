@@ -159,6 +159,7 @@ export default function ItineraryList({data,flightData ,hotel}) {
 
   useEffect(()=>{
     setLoading(loadingG)
+    console.log("itenary",itinerary)
   },[loadingG])
   
 
@@ -234,12 +235,14 @@ export default function ItineraryList({data,flightData ,hotel}) {
               ))}
               </div>
 
-              <div>
+              <div className="flex flex-1/3 flex-col">
               {/* dusplaying flight */}
                 <FlightCard flightData={tempFlight}/> 
                 {/* displaying hotels */}
                 <HotelList hotels={hotel}/>
+
                  <EventSwiper events={events} /> 
+
               </div>
             </div>
         

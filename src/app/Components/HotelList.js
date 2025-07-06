@@ -17,7 +17,7 @@ export default function HotelList({ hotels }) {
   return (
     <>
       {(hotels?.length > 1) ?
-         <div className="relative max-w-md mx-auto my-10 ">
+         <div className="relativemx-auto my-10 ">
       <div className="flex justify-between items-center mb-4 px-2 ">
         <h2 className="text-xl font-bold">Top Hotels</h2>
         <div className="space-x-2 ">

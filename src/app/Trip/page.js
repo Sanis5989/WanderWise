@@ -23,7 +23,9 @@ export default function Page() {
             <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities,flight,setFlight, loadingG, setLoadingG, hotel, setHotel, events, setEvents}}>
 
                 <LocationPicker/>
-<ItineraryList data={dailyActivities} flightData={flight} hotel={hotel} events={events}/> 
+
+{/* <ItineraryList data={dailyActivities} flightData={flight} hotel={hotel} events={events}/>  */}
+
                 {/* displaying itenary or search infos */}
                 {landing || loadingG ? 
                   <ItineraryList data={dailyActivities} flightData={flight} hotel={hotel} events={events}/> 

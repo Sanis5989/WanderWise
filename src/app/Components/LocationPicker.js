@@ -2336,6 +2336,7 @@ try {
     startDate:startDate,
     endDate:endDate
   }
+
   const eventsApiRes = await fetch("/api/events",{
     method:"POST",
     headers:{"Content-type" : "application/json"},
