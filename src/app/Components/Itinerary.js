@@ -4,6 +4,8 @@ import FlightCard from "./FlightCard";
 import { DailyActivitiesContext } from "../Trip/page";
 import HotelList from "./HotelList";
 import { ChevronDown, ChevronUp } from "lucide-react"; 
+import EventSwiper from "./EventSwiper";
+
 
 export default function ItineraryList({data,flightData ,hotel}) {
   const [itinerary, setItinerary] = useState([]);
@@ -11,7 +13,7 @@ export default function ItineraryList({data,flightData ,hotel}) {
   const [tempFlight, setTempFlight] =useState();
   
   
-  const {loadingG} = useContext(DailyActivitiesContext)
+  const {loadingG, events} = useContext(DailyActivitiesContext)
 
   const [openIndex, setOpenIndex] = useState(0); // default to first day
 
@@ -174,7 +176,7 @@ export default function ItineraryList({data,flightData ,hotel}) {
           <div className="flex-2/3">
 
           
-          {loading || !itinerary
+          {loadingG || !itinerary
             ? Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="mb-6 animate-pulse space-y-4">
                   <div className="h-6 w-40 bg-gray-300 rounded"></div>
@@ -237,6 +239,7 @@ export default function ItineraryList({data,flightData ,hotel}) {
                 <FlightCard flightData={tempFlight}/> 
                 {/* displaying hotels */}
                 <HotelList hotels={hotel}/>
+                 <EventSwiper events={events} /> 
               </div>
             </div>
         

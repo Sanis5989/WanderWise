@@ -16,16 +16,17 @@ export default function Page() {
       const [loadingG, setLoadingG] =useState(false);
       const [landing, setLanding] = useState(false)
       const [hotel,setHotel] =useState();
+      const [events, setEvents] =useState([]);
 
   return (
     <div>
-            <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities,flight,setFlight, loadingG, setLoadingG, hotel, setHotel}}>
+            <DailyActivitiesContext.Provider value={{dailyActivities, setDailyActivities,flight,setFlight, loadingG, setLoadingG, hotel, setHotel, events, setEvents}}>
 
                 <LocationPicker/>
-
+<ItineraryList data={dailyActivities} flightData={flight} hotel={hotel} events={events}/> 
                 {/* displaying itenary or search infos */}
                 {landing || loadingG ? 
-                  <ItineraryList data={dailyActivities} flightData={flight} hotel={hotel}/> 
+                  <ItineraryList data={dailyActivities} flightData={flight} hotel={hotel} events={events}/> 
                   :
                   <div>
                     <div className="text-center mt-10">
