@@ -244,10 +244,13 @@ export default function ItineraryList({data,flightData ,hotel}) {
               <div className="flex flex-1/3 flex-col">
               {/* dusplaying flight */}
                 <FlightCard flightData={tempFlight}/> 
+
+                <EventSwiper events={events} /> 
+
                 {/* displaying hotels */}
                 <HotelList hotels={hotel}/>
 
-                 <EventSwiper events={events} /> 
+                
 
               </div>
         </div>

@@ -20,9 +20,9 @@ export default function HotelList({ hotels }) {
   return (
     <>
       {(hotels?.length > 1) && !loadingG ?
-         <div className="relativemx-auto my-10 ">
-      <div className="flex justify-between items-center mb-4 px-2 ">
-        <h2 className="text-xl font-bold">Top Hotels</h2>
+         <div className="relativemx-auto my-5 ">
+      <div className="flex justify-between items-center px-2 ">
+        <h2 className="text-2xl font-bold my-2">Top Hotels</h2>
         <div className="space-x-2 ">
           {/* <button
             onClick={prevCard}
@@ -34,7 +34,7 @@ export default function HotelList({ hotels }) {
             onClick={nextCard}
             className="cursor-pointer"
           >
-            <FaArrowRight size={25} color='black'/>
+            <FaArrowRight size={25} color='black' className='rounded-full p-0.5 glow-effect'/>
           </button>
         </div>
       </div>
@@ -65,17 +65,20 @@ export default function HotelList({ hotels }) {
                     (new Date(hotels[current]?.stayDate[1]) - new Date(hotels[current]?.stayDate[0])) / (1000 * 60 * 60 * 24)
                   )+1
                   }{" "} days</p>
-                <p className="font-bold my-2">
+                <div className='flex items-center justify-between pt-2'>
+                  <p className="font-bold my-2">
                    {hotels[current]?.price}
-                </p>
-                <a
-                  href={hotels[current]?.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-                >
-                  Book Now
-                </a>
+                  </p>
+                  <a
+                    href={hotels[current]?.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  >
+                    Book Now
+                  </a>
+                </div>
+                
               </div>
             </div>
           </motion.div>

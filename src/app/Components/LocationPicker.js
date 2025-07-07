@@ -138,7 +138,7 @@ export default function LocationPicker() {
       options // Pass the options object
     );
   };
-
+  
   const dummyFlightsResponse = {
     "data": {
       "context": {
@@ -2218,9 +2218,10 @@ export default function LocationPicker() {
 
 
   //function to create detailed itenary
-  const search = async () => {
+  const search = async (from, to, startDate, endDate) => {
   console.log(from, to, startDate, endDate);
 
+  localStorage.setItem("destination", to)
   if (!from || !to) {
     console.log("input data");
     toast.error("Please select a destination.");
@@ -2354,6 +2355,8 @@ export default function LocationPicker() {
 
   }
 
+
+
   return (
     <div className="w-full max-w-7xl mx-auto p-4 py-6">
       <div className="flex items-center justify-between rounded-full shadow-md px-4 py-6 gap-2 flex-wrap">
@@ -2427,7 +2430,7 @@ export default function LocationPicker() {
         </div>
 
         {/* Search Button */}
-        <button className="button-primary font-semibold mr-4" onClick={()=> search()}>
+        <button className="button-primary font-semibold mr-4" onClick={()=> search(from, to, startDate, endDate)}>
           Search
         </button>
       </div>
