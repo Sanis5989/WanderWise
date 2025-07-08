@@ -76,7 +76,13 @@ export default function FeaturedCards() {
       const endDate = searchParams.get('endDate');
         if (source === 'home'){
           console.log("from home")
-          search(curLocation,destination,new Date(startDate),new Date(endDate))
+          if(destination && curLocation && startDate && endDate){
+                search("Brisbane",destination,new Date(startDate),new Date(endDate))
+          }
+          else{
+            toast.error("Error Fetching");
+          }
+          
         }
       },[])
 
@@ -84,7 +90,9 @@ export default function FeaturedCards() {
   
   const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext);
   const{setLoadingG, setEvents, setHotel,setFlight,setDailyActivities} =useContext(DailyActivitiesContext)
-    //function to create detailed itenary
+   
+  
+  //function to create detailed itenary
   const search = async (from, to, startDate, endDate) => {
   console.log(from, to, startDate, endDate);
 
@@ -111,7 +119,6 @@ export default function FeaturedCards() {
     return;
   }
 
-  setLoadingG(true);  
 
   const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
   const hotelOptions = {

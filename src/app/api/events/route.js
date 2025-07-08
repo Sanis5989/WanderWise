@@ -24,20 +24,6 @@ export async function POST(req) {
   }
 }
 
-// async function fetchEvents(city) {
-//   const apiKey = process.env.EVENTS_SERPS_API;
-//   const url = `https://serpapi.com/search.json?engine=google_events&q=Events in ${city}&hl=en&gl=us&api_key=${apiKey}`;
-
-//   try {
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     console.log(data);
-//     return data;
-//   } catch (err) {
-//     console.error("Error fetching SerpApi events:", err);
-//   }
-// }
-
 const cache = new Map();
 
 async function fetchEvents(city,startDate, endDate ) {

@@ -36,7 +36,7 @@ export default function HomePage() {
                 const today = addDays(new Date(), 1)
                 const params = new URLSearchParams({
                                                     source: 'home',
-                                                    destination: deal?.plannerParams.destination,
+                                                    destination: deal?.plannerParams?.destination,
                                                     curLocation:"Brisbane",
                                                     startDate: today,
                                                     endDate: addDays(today, deal?.plannerParams?.duration)
