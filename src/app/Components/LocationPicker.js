@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DailyActivitiesContext} from "../Trip/page";
 import toast, { Toaster } from 'react-hot-toast';
 import { addDays,format } from "date-fns";
+import { TripContext } from '../Trip/page';
 
 export default function LocationPicker() {
 
@@ -22,7 +23,8 @@ export default function LocationPicker() {
     Adelaide: "ADL",
     Canberra: "CBR",
     Darwin: "DRW",
-    Hobart: "HBA"
+    Hobart: "HBA",
+    Cairns: "CNS"
   };
   const locationHotels = {
     Sydney: "eyJjaXR5X25hbWUiOiJTeWRuZXkiLCJjb3VudHJ5IjoiQXVzdHJhbGlhIiwiZGVzdF9pZCI6IjkwMDA3MzA2OSIsImRlc3RfdHlwZSI6ImxhbmRtYXJrIn0=",
@@ -46,14 +48,15 @@ export default function LocationPicker() {
     "Canberra",
     "Darwin",
     "Hobart",
+    "Cairns"
   ];
 
-
-  const [from, setFrom] = useState("");
+  const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext)
+  // const [from, setFrom] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
-  const [to, setTo] = useState("");
-  const [startDate, setStartDate] = useState(addDays(new Date(),1));
-  const [endDate, setEndDate] = useState(addDays(new Date(),2));
+  // const [to, setTo] = useState("");
+  // const [startDate, setStartDate] = useState(addDays(new Date(),1));
+  // const [endDate, setEndDate] = useState(addDays(new Date(),2));
   const [resHotels, setResHotels] =useState([]);
 
   //function to handle current location
@@ -139,2082 +142,2082 @@ export default function LocationPicker() {
     );
   };
   
-  const dummyFlightsResponse = {
-    "data": {
-      "context": {
-        "status": "incomplete",
-        "sessionId": "KLUv_SCN3QMA0sgdHsDr1_zv_v-LbYAkIgXttnmpMkkiSeQi1YGgYtH3Cs4TIM9864UpdA3ud8d9XnmlZHxru8nTt0RRlVIAhssuC7sIFxn3kCGdll-fzfdj5O04fec_f7XV5AiIFx3l_zZ7Muuvyp2Sedm7LoXtUlaaDM0AFYAQDQEA",
-        "totalResults": 10
-      },
-      "itineraries": [
-        {
-          "id": "16692-2507042135--31940-0-10041-2507042305|10041-2507071635--31694-0-16692-2507071810",
-          "price": {
-            "raw": 271.86,
-            "formatted": "$272",
-            "pricingOptionId": "LAy0Nda4pBNs"
-          },
-          "legs": [
-            {
-              "id": "16692-2507042135--31940-0-10041-2507042305",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T21:35:00",
-              "arrival": "2025-07-04T23:05:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507042135-2507042305--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T21:35:00",
-                  "arrival": "2025-07-04T23:05:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "556",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071635--31694-0-16692-2507071810",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T16:35:00",
-              "arrival": "2025-07-07T18:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31694,
-                    "alternateId": "V1",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-                    "name": "Virgin Australia",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071635-2507071810--31694",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T16:35:00",
-                  "arrival": "2025-07-07T18:10:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "966",
-                  "marketingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "tags": [
-            "cheapest",
-            "second_shortest"
-          ],
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.999
-        },
-        {
-          "id": "16692-2507042030--31694-0-10041-2507042200|10041-2507071635--31694-0-16692-2507071810",
-          "price": {
-            "raw": 318.96,
-            "formatted": "$319",
-            "pricingOptionId": "Yf_INPKiimmd"
-          },
-          "legs": [
-            {
-              "id": "16692-2507042030--31694-0-10041-2507042200",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T20:30:00",
-              "arrival": "2025-07-04T22:00:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31694,
-                    "alternateId": "V1",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-                    "name": "Virgin Australia",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507042030-2507042200--31694",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T20:30:00",
-                  "arrival": "2025-07-04T22:00:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "993",
-                  "marketingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071635--31694-0-16692-2507071810",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T16:35:00",
-              "arrival": "2025-07-07T18:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31694,
-                    "alternateId": "V1",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-                    "name": "Virgin Australia",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071635-2507071810--31694",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T16:35:00",
-                  "arrival": "2025-07-07T18:10:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "966",
-                  "marketingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "tags": [
-            "third_cheapest",
-            "third_shortest"
-          ],
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.877965
-        },
-        {
-          "id": "16692-2507042135--31940-0-10041-2507042305|10041-2507072045--32166-0-16692-2507072215",
-          "price": {
-            "raw": 273.22,
-            "formatted": "$274",
-            "pricingOptionId": "Fj-1TOWnznD1"
-          },
-          "legs": [
-            {
-              "id": "16692-2507042135--31940-0-10041-2507042305",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T21:35:00",
-              "arrival": "2025-07-04T23:05:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507042135-2507042305--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T21:35:00",
-                  "arrival": "2025-07-04T23:05:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "556",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507072045--32166-0-16692-2507072215",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T20:45:00",
-              "arrival": "2025-07-07T22:15:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507072045-2507072215--32166",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T20:45:00",
-                  "arrival": "2025-07-07T22:15:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "825",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "tags": [
-            "second_cheapest",
-            "shortest"
-          ],
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.787516
-        },
-        {
-          "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507071155--32166-0-16692-2507071330",
-          "price": {
-            "raw": 411.87,
-            "formatted": "$412",
-            "pricingOptionId": "5jVgdE4yiI1r"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041525--32166-0-10041-2507041655",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T15:25:00",
-              "arrival": "2025-07-04T16:55:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041525-2507041655--32166",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T15:25:00",
-                  "arrival": "2025-07-04T16:55:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "828",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071155--32166-0-16692-2507071330",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T11:55:00",
-              "arrival": "2025-07-07T13:30:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071155-2507071330--32166",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T11:55:00",
-                  "arrival": "2025-07-07T13:30:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "817",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.74585
-        },
-        {
-          "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507071515--32166-0-16692-2507071650",
-          "price": {
-            "raw": 422.74,
-            "formatted": "$423",
-            "pricingOptionId": "pGQvwG4CQgK_"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041525--32166-0-10041-2507041655",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T15:25:00",
-              "arrival": "2025-07-04T16:55:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041525-2507041655--32166",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T15:25:00",
-                  "arrival": "2025-07-04T16:55:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "828",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071515--32166-0-16692-2507071650",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T15:15:00",
-              "arrival": "2025-07-07T16:50:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071515-2507071650--32166",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T15:15:00",
-                  "arrival": "2025-07-07T16:50:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "821",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.740328
-        },
-        {
-          "id": "16692-2507041140--31940-0-10041-2507041310|10041-2507071635--31694-0-16692-2507071810",
-          "price": {
-            "raw": 441.77,
-            "formatted": "$442",
-            "pricingOptionId": "jeFOqAtx3PeL"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041140--31940-0-10041-2507041310",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T11:40:00",
-              "arrival": "2025-07-04T13:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041140-2507041310--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T11:40:00",
-                  "arrival": "2025-07-04T13:10:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "516",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071635--31694-0-16692-2507071810",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T16:35:00",
-              "arrival": "2025-07-07T18:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31694,
-                    "alternateId": "V1",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-                    "name": "Virgin Australia",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071635-2507071810--31694",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T16:35:00",
-                  "arrival": "2025-07-07T18:10:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "966",
-                  "marketingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.708461
-        },
-        {
-          "id": "16692-2507041005--31940-0-10041-2507041135|10041-2507071635--31694-0-16692-2507071810",
-          "price": {
-            "raw": 441.77,
-            "formatted": "$442",
-            "pricingOptionId": "nQWj-21BEE8S"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041005--31940-0-10041-2507041135",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T10:05:00",
-              "arrival": "2025-07-04T11:35:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041005-2507041135--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T10:05:00",
-                  "arrival": "2025-07-04T11:35:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "512",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071635--31694-0-16692-2507071810",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T16:35:00",
-              "arrival": "2025-07-07T18:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31694,
-                    "alternateId": "V1",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-                    "name": "Virgin Australia",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071635-2507071810--31694",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T16:35:00",
-                  "arrival": "2025-07-07T18:10:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "966",
-                  "marketingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31694,
-                    "name": "Virgin Australia",
-                    "alternateId": "V1",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.703344
-        },
-        {
-          "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507070950--32166-0-16692-2507071125",
-          "price": {
-            "raw": 432.25,
-            "formatted": "$433",
-            "pricingOptionId": "a9dvksaMOM-z"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041525--32166-0-10041-2507041655",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T15:25:00",
-              "arrival": "2025-07-04T16:55:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041525-2507041655--32166",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T15:25:00",
-                  "arrival": "2025-07-04T16:55:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "828",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507070950--32166-0-16692-2507071125",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T09:50:00",
-              "arrival": "2025-07-07T11:25:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507070950-2507071125--32166",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T09:50:00",
-                  "arrival": "2025-07-07T11:25:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "815",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.703267
-        },
-        {
-          "id": "16692-2507040705--31940-0-10041-2507040835|10041-2507072045--31940-0-16692-2507072220",
-          "price": {
-            "raw": 455.79,
-            "formatted": "$456",
-            "pricingOptionId": "cCVc_1S2qmV8"
-          },
-          "legs": [
-            {
-              "id": "16692-2507040705--31940-0-10041-2507040835",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T07:05:00",
-              "arrival": "2025-07-04T08:35:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507040705-2507040835--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T07:05:00",
-                  "arrival": "2025-07-04T08:35:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "504",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507072045--31940-0-16692-2507072220",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T20:45:00",
-              "arrival": "2025-07-07T22:20:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507072045-2507072220--31940",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T20:45:00",
-                  "arrival": "2025-07-07T22:20:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "559",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.70319
-        },
-        {
-          "id": "16692-2507041140--31940-0-10041-2507041310|10041-2507071310--32166-0-16692-2507071445",
-          "price": {
-            "raw": 459.44,
-            "formatted": "$460",
-            "pricingOptionId": "lfEDTiMS52M0"
-          },
-          "legs": [
-            {
-              "id": "16692-2507041140--31940-0-10041-2507041310",
-              "origin": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 90,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-04T11:40:00",
-              "arrival": "2025-07-04T13:10:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -31940,
-                    "alternateId": "QF",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-                    "name": "Qantas",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "16692-10041-2507041140-2507041310--31940",
-                  "origin": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-04T11:40:00",
-                  "arrival": "2025-07-04T13:10:00",
-                  "durationInMinutes": 90,
-                  "flightNumber": "516",
-                  "marketingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -31940,
-                    "name": "Qantas",
-                    "alternateId": "QF",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            },
-            {
-              "id": "10041-2507071310--32166-0-16692-2507071445",
-              "origin": {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane",
-                "displayCode": "BNE",
-                "city": "Brisbane",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "destination": {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney",
-                "displayCode": "SYD",
-                "city": "Sydney",
-                "country": "Australia",
-                "isHighlighted": false
-              },
-              "durationInMinutes": 95,
-              "stopCount": 0,
-              "isSmallestStops": false,
-              "departure": "2025-07-07T13:10:00",
-              "arrival": "2025-07-07T14:45:00",
-              "timeDeltaInDays": 0,
-              "carriers": {
-                "marketing": [
-                  {
-                    "id": -32166,
-                    "alternateId": "JQ",
-                    "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-                    "name": "Jetstar",
-                    "allianceId": 0
-                  }
-                ],
-                "operationType": "fully_operated"
-              },
-              "segments": [
-                {
-                  "id": "10041-16692-2507071310-2507071445--32166",
-                  "origin": {
-                    "flightPlaceId": "BNE",
-                    "displayCode": "BNE",
-                    "parent": {
-                      "flightPlaceId": "BNEA",
-                      "displayCode": "BNE",
-                      "name": "Brisbane",
-                      "type": "City"
-                    },
-                    "name": "Brisbane",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "destination": {
-                    "flightPlaceId": "SYD",
-                    "displayCode": "SYD",
-                    "parent": {
-                      "flightPlaceId": "SYDA",
-                      "displayCode": "SYD",
-                      "name": "Sydney",
-                      "type": "City"
-                    },
-                    "name": "Sydney",
-                    "type": "Airport",
-                    "country": "Australia"
-                  },
-                  "departure": "2025-07-07T13:10:00",
-                  "arrival": "2025-07-07T14:45:00",
-                  "durationInMinutes": 95,
-                  "flightNumber": "829",
-                  "marketingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  },
-                  "operatingCarrier": {
-                    "id": -32166,
-                    "name": "Jetstar",
-                    "alternateId": "JQ",
-                    "allianceId": 0,
-                    "displayCode": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "isSelfTransfer": false,
-          "isProtectedSelfTransfer": false,
-          "farePolicy": {
-            "isChangeAllowed": false,
-            "isPartiallyChangeable": false,
-            "isCancellationAllowed": false,
-            "isPartiallyRefundable": false
-          },
-          "fareAttributes": {},
-          "isMashUp": false,
-          "hasFlexibleOptions": false,
-          "score": 0.700737
-        }
-      ],
-      "messages": [],
-      "filterStats": {
-        "duration": {
-          "min": 90,
-          "max": 95,
-          "multiCityMin": 180,
-          "multiCityMax": 185
-        },
-        "airports": [
-          {
-            "city": "Brisbane",
-            "airports": [
-              {
-                "id": "BNE",
-                "entityId": "95673551",
-                "name": "Brisbane"
-              }
-            ]
-          },
-          {
-            "city": "Sydney",
-            "airports": [
-              {
-                "id": "SYD",
-                "entityId": "128667058",
-                "name": "Sydney"
-              }
-            ]
-          }
-        ],
-        "carriers": [
-          {
-            "id": -32166,
-            "alternateId": "JQ",
-            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
-            "name": "Jetstar",
-            "allianceId": 0
-          },
-          {
-            "id": -31940,
-            "alternateId": "QF",
-            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
-            "name": "Qantas",
-            "allianceId": 0
-          },
-          {
-            "id": -31694,
-            "alternateId": "V1",
-            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
-            "name": "Virgin Australia",
-            "allianceId": 0
-          }
-        ],
-        "stopPrices": {
-          "direct": {
-            "isPresent": true,
-            "formattedPrice": "$272"
-          },
-          "one": {
-            "isPresent": false
-          },
-          "twoOrMore": {
-            "isPresent": false
-          }
-        },
-        "alliances": []
-      },
-      "flightsSessionId": "cfaa867c-f684-44ab-af38-5b6b0ee4c293",
-      "destinationImageUrl": "https://content.skyscnr.com/m/3719e8f4a5daf43d/original/Flights-Placeholder.jpg",
-      "token": "eyJhIjoxLCJjIjowLCJpIjowLCJjYyI6ImVjb25vbXkiLCJvIjoiU1lEIiwiZCI6IkJORSIsImQxIjoiMjAyNS0wNy0wNCIsImQyIjoiMjAyNS0wNy0wNyJ9"
-    },
-    "status": true,
-    "message": "Successful"
+  // const dummyFlightsResponse = {
+  //   "data": {
+  //     "context": {
+  //       "status": "incomplete",
+  //       "sessionId": "KLUv_SCN3QMA0sgdHsDr1_zv_v-LbYAkIgXttnmpMkkiSeQi1YGgYtH3Cs4TIM9864UpdA3ud8d9XnmlZHxru8nTt0RRlVIAhssuC7sIFxn3kCGdll-fzfdj5O04fec_f7XV5AiIFx3l_zZ7Muuvyp2Sedm7LoXtUlaaDM0AFYAQDQEA",
+  //       "totalResults": 10
+  //     },
+  //     "itineraries": [
+  //       {
+  //         "id": "16692-2507042135--31940-0-10041-2507042305|10041-2507071635--31694-0-16692-2507071810",
+  //         "price": {
+  //           "raw": 271.86,
+  //           "formatted": "$272",
+  //           "pricingOptionId": "LAy0Nda4pBNs"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507042135--31940-0-10041-2507042305",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T21:35:00",
+  //             "arrival": "2025-07-04T23:05:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507042135-2507042305--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T21:35:00",
+  //                 "arrival": "2025-07-04T23:05:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "556",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071635--31694-0-16692-2507071810",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T16:35:00",
+  //             "arrival": "2025-07-07T18:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31694,
+  //                   "alternateId": "V1",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //                   "name": "Virgin Australia",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071635-2507071810--31694",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T16:35:00",
+  //                 "arrival": "2025-07-07T18:10:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "966",
+  //                 "marketingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "tags": [
+  //           "cheapest",
+  //           "second_shortest"
+  //         ],
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.999
+  //       },
+  //       {
+  //         "id": "16692-2507042030--31694-0-10041-2507042200|10041-2507071635--31694-0-16692-2507071810",
+  //         "price": {
+  //           "raw": 318.96,
+  //           "formatted": "$319",
+  //           "pricingOptionId": "Yf_INPKiimmd"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507042030--31694-0-10041-2507042200",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T20:30:00",
+  //             "arrival": "2025-07-04T22:00:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31694,
+  //                   "alternateId": "V1",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //                   "name": "Virgin Australia",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507042030-2507042200--31694",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T20:30:00",
+  //                 "arrival": "2025-07-04T22:00:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "993",
+  //                 "marketingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071635--31694-0-16692-2507071810",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T16:35:00",
+  //             "arrival": "2025-07-07T18:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31694,
+  //                   "alternateId": "V1",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //                   "name": "Virgin Australia",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071635-2507071810--31694",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T16:35:00",
+  //                 "arrival": "2025-07-07T18:10:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "966",
+  //                 "marketingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "tags": [
+  //           "third_cheapest",
+  //           "third_shortest"
+  //         ],
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.877965
+  //       },
+  //       {
+  //         "id": "16692-2507042135--31940-0-10041-2507042305|10041-2507072045--32166-0-16692-2507072215",
+  //         "price": {
+  //           "raw": 273.22,
+  //           "formatted": "$274",
+  //           "pricingOptionId": "Fj-1TOWnznD1"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507042135--31940-0-10041-2507042305",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T21:35:00",
+  //             "arrival": "2025-07-04T23:05:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507042135-2507042305--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T21:35:00",
+  //                 "arrival": "2025-07-04T23:05:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "556",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507072045--32166-0-16692-2507072215",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T20:45:00",
+  //             "arrival": "2025-07-07T22:15:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507072045-2507072215--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T20:45:00",
+  //                 "arrival": "2025-07-07T22:15:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "825",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "tags": [
+  //           "second_cheapest",
+  //           "shortest"
+  //         ],
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.787516
+  //       },
+  //       {
+  //         "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507071155--32166-0-16692-2507071330",
+  //         "price": {
+  //           "raw": 411.87,
+  //           "formatted": "$412",
+  //           "pricingOptionId": "5jVgdE4yiI1r"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041525--32166-0-10041-2507041655",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T15:25:00",
+  //             "arrival": "2025-07-04T16:55:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041525-2507041655--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T15:25:00",
+  //                 "arrival": "2025-07-04T16:55:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "828",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071155--32166-0-16692-2507071330",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T11:55:00",
+  //             "arrival": "2025-07-07T13:30:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071155-2507071330--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T11:55:00",
+  //                 "arrival": "2025-07-07T13:30:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "817",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.74585
+  //       },
+  //       {
+  //         "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507071515--32166-0-16692-2507071650",
+  //         "price": {
+  //           "raw": 422.74,
+  //           "formatted": "$423",
+  //           "pricingOptionId": "pGQvwG4CQgK_"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041525--32166-0-10041-2507041655",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T15:25:00",
+  //             "arrival": "2025-07-04T16:55:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041525-2507041655--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T15:25:00",
+  //                 "arrival": "2025-07-04T16:55:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "828",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071515--32166-0-16692-2507071650",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T15:15:00",
+  //             "arrival": "2025-07-07T16:50:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071515-2507071650--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T15:15:00",
+  //                 "arrival": "2025-07-07T16:50:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "821",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.740328
+  //       },
+  //       {
+  //         "id": "16692-2507041140--31940-0-10041-2507041310|10041-2507071635--31694-0-16692-2507071810",
+  //         "price": {
+  //           "raw": 441.77,
+  //           "formatted": "$442",
+  //           "pricingOptionId": "jeFOqAtx3PeL"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041140--31940-0-10041-2507041310",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T11:40:00",
+  //             "arrival": "2025-07-04T13:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041140-2507041310--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T11:40:00",
+  //                 "arrival": "2025-07-04T13:10:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "516",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071635--31694-0-16692-2507071810",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T16:35:00",
+  //             "arrival": "2025-07-07T18:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31694,
+  //                   "alternateId": "V1",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //                   "name": "Virgin Australia",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071635-2507071810--31694",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T16:35:00",
+  //                 "arrival": "2025-07-07T18:10:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "966",
+  //                 "marketingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.708461
+  //       },
+  //       {
+  //         "id": "16692-2507041005--31940-0-10041-2507041135|10041-2507071635--31694-0-16692-2507071810",
+  //         "price": {
+  //           "raw": 441.77,
+  //           "formatted": "$442",
+  //           "pricingOptionId": "nQWj-21BEE8S"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041005--31940-0-10041-2507041135",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T10:05:00",
+  //             "arrival": "2025-07-04T11:35:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041005-2507041135--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T10:05:00",
+  //                 "arrival": "2025-07-04T11:35:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "512",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071635--31694-0-16692-2507071810",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T16:35:00",
+  //             "arrival": "2025-07-07T18:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31694,
+  //                   "alternateId": "V1",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //                   "name": "Virgin Australia",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071635-2507071810--31694",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T16:35:00",
+  //                 "arrival": "2025-07-07T18:10:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "966",
+  //                 "marketingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31694,
+  //                   "name": "Virgin Australia",
+  //                   "alternateId": "V1",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.703344
+  //       },
+  //       {
+  //         "id": "16692-2507041525--32166-0-10041-2507041655|10041-2507070950--32166-0-16692-2507071125",
+  //         "price": {
+  //           "raw": 432.25,
+  //           "formatted": "$433",
+  //           "pricingOptionId": "a9dvksaMOM-z"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041525--32166-0-10041-2507041655",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T15:25:00",
+  //             "arrival": "2025-07-04T16:55:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041525-2507041655--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T15:25:00",
+  //                 "arrival": "2025-07-04T16:55:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "828",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507070950--32166-0-16692-2507071125",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T09:50:00",
+  //             "arrival": "2025-07-07T11:25:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507070950-2507071125--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T09:50:00",
+  //                 "arrival": "2025-07-07T11:25:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "815",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.703267
+  //       },
+  //       {
+  //         "id": "16692-2507040705--31940-0-10041-2507040835|10041-2507072045--31940-0-16692-2507072220",
+  //         "price": {
+  //           "raw": 455.79,
+  //           "formatted": "$456",
+  //           "pricingOptionId": "cCVc_1S2qmV8"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507040705--31940-0-10041-2507040835",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T07:05:00",
+  //             "arrival": "2025-07-04T08:35:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507040705-2507040835--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T07:05:00",
+  //                 "arrival": "2025-07-04T08:35:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "504",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507072045--31940-0-16692-2507072220",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T20:45:00",
+  //             "arrival": "2025-07-07T22:20:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507072045-2507072220--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T20:45:00",
+  //                 "arrival": "2025-07-07T22:20:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "559",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.70319
+  //       },
+  //       {
+  //         "id": "16692-2507041140--31940-0-10041-2507041310|10041-2507071310--32166-0-16692-2507071445",
+  //         "price": {
+  //           "raw": 459.44,
+  //           "formatted": "$460",
+  //           "pricingOptionId": "lfEDTiMS52M0"
+  //         },
+  //         "legs": [
+  //           {
+  //             "id": "16692-2507041140--31940-0-10041-2507041310",
+  //             "origin": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 90,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-04T11:40:00",
+  //             "arrival": "2025-07-04T13:10:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -31940,
+  //                   "alternateId": "QF",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //                   "name": "Qantas",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "16692-10041-2507041140-2507041310--31940",
+  //                 "origin": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-04T11:40:00",
+  //                 "arrival": "2025-07-04T13:10:00",
+  //                 "durationInMinutes": 90,
+  //                 "flightNumber": "516",
+  //                 "marketingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -31940,
+  //                   "name": "Qantas",
+  //                   "alternateId": "QF",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           },
+  //           {
+  //             "id": "10041-2507071310--32166-0-16692-2507071445",
+  //             "origin": {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane",
+  //               "displayCode": "BNE",
+  //               "city": "Brisbane",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "destination": {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney",
+  //               "displayCode": "SYD",
+  //               "city": "Sydney",
+  //               "country": "Australia",
+  //               "isHighlighted": false
+  //             },
+  //             "durationInMinutes": 95,
+  //             "stopCount": 0,
+  //             "isSmallestStops": false,
+  //             "departure": "2025-07-07T13:10:00",
+  //             "arrival": "2025-07-07T14:45:00",
+  //             "timeDeltaInDays": 0,
+  //             "carriers": {
+  //               "marketing": [
+  //                 {
+  //                   "id": -32166,
+  //                   "alternateId": "JQ",
+  //                   "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //                   "name": "Jetstar",
+  //                   "allianceId": 0
+  //                 }
+  //               ],
+  //               "operationType": "fully_operated"
+  //             },
+  //             "segments": [
+  //               {
+  //                 "id": "10041-16692-2507071310-2507071445--32166",
+  //                 "origin": {
+  //                   "flightPlaceId": "BNE",
+  //                   "displayCode": "BNE",
+  //                   "parent": {
+  //                     "flightPlaceId": "BNEA",
+  //                     "displayCode": "BNE",
+  //                     "name": "Brisbane",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Brisbane",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "destination": {
+  //                   "flightPlaceId": "SYD",
+  //                   "displayCode": "SYD",
+  //                   "parent": {
+  //                     "flightPlaceId": "SYDA",
+  //                     "displayCode": "SYD",
+  //                     "name": "Sydney",
+  //                     "type": "City"
+  //                   },
+  //                   "name": "Sydney",
+  //                   "type": "Airport",
+  //                   "country": "Australia"
+  //                 },
+  //                 "departure": "2025-07-07T13:10:00",
+  //                 "arrival": "2025-07-07T14:45:00",
+  //                 "durationInMinutes": 95,
+  //                 "flightNumber": "829",
+  //                 "marketingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 },
+  //                 "operatingCarrier": {
+  //                   "id": -32166,
+  //                   "name": "Jetstar",
+  //                   "alternateId": "JQ",
+  //                   "allianceId": 0,
+  //                   "displayCode": ""
+  //                 }
+  //               }
+  //             ]
+  //           }
+  //         ],
+  //         "isSelfTransfer": false,
+  //         "isProtectedSelfTransfer": false,
+  //         "farePolicy": {
+  //           "isChangeAllowed": false,
+  //           "isPartiallyChangeable": false,
+  //           "isCancellationAllowed": false,
+  //           "isPartiallyRefundable": false
+  //         },
+  //         "fareAttributes": {},
+  //         "isMashUp": false,
+  //         "hasFlexibleOptions": false,
+  //         "score": 0.700737
+  //       }
+  //     ],
+  //     "messages": [],
+  //     "filterStats": {
+  //       "duration": {
+  //         "min": 90,
+  //         "max": 95,
+  //         "multiCityMin": 180,
+  //         "multiCityMax": 185
+  //       },
+  //       "airports": [
+  //         {
+  //           "city": "Brisbane",
+  //           "airports": [
+  //             {
+  //               "id": "BNE",
+  //               "entityId": "95673551",
+  //               "name": "Brisbane"
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           "city": "Sydney",
+  //           "airports": [
+  //             {
+  //               "id": "SYD",
+  //               "entityId": "128667058",
+  //               "name": "Sydney"
+  //             }
+  //           ]
+  //         }
+  //       ],
+  //       "carriers": [
+  //         {
+  //           "id": -32166,
+  //           "alternateId": "JQ",
+  //           "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/JQ.png",
+  //           "name": "Jetstar",
+  //           "allianceId": 0
+  //         },
+  //         {
+  //           "id": -31940,
+  //           "alternateId": "QF",
+  //           "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/QF.png",
+  //           "name": "Qantas",
+  //           "allianceId": 0
+  //         },
+  //         {
+  //           "id": -31694,
+  //           "alternateId": "V1",
+  //           "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/V1.png",
+  //           "name": "Virgin Australia",
+  //           "allianceId": 0
+  //         }
+  //       ],
+  //       "stopPrices": {
+  //         "direct": {
+  //           "isPresent": true,
+  //           "formattedPrice": "$272"
+  //         },
+  //         "one": {
+  //           "isPresent": false
+  //         },
+  //         "twoOrMore": {
+  //           "isPresent": false
+  //         }
+  //       },
+  //       "alliances": []
+  //     },
+  //     "flightsSessionId": "cfaa867c-f684-44ab-af38-5b6b0ee4c293",
+  //     "destinationImageUrl": "https://content.skyscnr.com/m/3719e8f4a5daf43d/original/Flights-Placeholder.jpg",
+  //     "token": "eyJhIjoxLCJjIjowLCJpIjowLCJjYyI6ImVjb25vbXkiLCJvIjoiU1lEIiwiZCI6IkJORSIsImQxIjoiMjAyNS0wNy0wNCIsImQyIjoiMjAyNS0wNy0wNyJ9"
+  //   },
+  //   "status": true,
+  //   "message": "Successful"
     
-  }
+  // }
 
 
   //function to create detailed itenary
@@ -2356,7 +2359,6 @@ export default function LocationPicker() {
   }
 
 
-
   return (
     <div className="w-full max-w-7xl mx-auto p-4 py-6">
       <div className="flex items-center justify-between rounded-full shadow-md px-4 py-6 gap-2 flex-wrap">
@@ -2366,8 +2368,8 @@ export default function LocationPicker() {
           <div className="w-full">
             <select
                 className="w-full border border-gray-300 rounded-xl p-2"
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
+                value={curLocation}
+                onChange={(e) => setCurLocation(e.target.value)}
             >
                 <option value="">Current location</option>
                     {locations.map((loc) => (
@@ -2395,8 +2397,8 @@ export default function LocationPicker() {
           
           <select
             className="w-full border border-gray-300 rounded-xl p-2"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
           >
             <option value="">Destination</option>
             {locations.map((loc) => (
@@ -2430,7 +2432,7 @@ export default function LocationPicker() {
         </div>
 
         {/* Search Button */}
-        <button className="button-primary font-semibold mr-4" onClick={()=> search(from, to, startDate, endDate)}>
+        <button className="button-primary font-semibold mr-4" onClick={()=> search(curLocation,destination,startDate,endDate)}>
           Search
         </button>
       </div>

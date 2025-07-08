@@ -25,7 +25,7 @@ export default function Navbar() {
           <div className='hidden md:flex flex-row gap-5 mr-3.5'>
                 <button className='button-secondary'>Log in</button>
                 <button className='button-primary'>Sign Up</button>
-                {/* <ThemeToggle/> */}
+                <ThemeToggle/>
           </div>
 
         {/* display login/ signup for SMALL screen */}
