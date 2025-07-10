@@ -16,12 +16,8 @@ import { addDays } from 'date-fns'
 // export  const DailyActivitiesContext = createContext();
 
 export default function HomePage() {
-  const [dailyActivities,setDailyActivities] = useState();
+
   const router = useRouter();
-
-  
-
-
 
   return (
     <div>

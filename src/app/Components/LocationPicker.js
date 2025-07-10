@@ -2187,7 +2187,7 @@ export default function LocationPicker() {
   localStorage.setItem("destination", to)
   if (!from || !to) {
     console.log("input data");
-    toast.error("Please select a destination.");
+    toast.error("Please select a destination and your current location.");
     return;
   }
 
@@ -2203,11 +2203,6 @@ export default function LocationPicker() {
   }
   setLoadingG(true)
 
-  
-
-
-
-  setLoadingG(true);  
 
   const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
   const hotelOptions = {
