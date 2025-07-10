@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { FaMapMarkerAlt, FaExchangeAlt, FaCalendarAlt } from "react-icons/fa";
 import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
@@ -9,11 +9,27 @@ import toast, { Toaster } from 'react-hot-toast';
 import { addDays,format } from "date-fns";
 import { TripContext } from '../Trip/page';
 import { locationAirport,locationHotels,locations } from "../Utils/location";
+import Fuse from "fuse.js";
+
+const options = {
+  includeScore: true,
+  threshold: 0.4,
+};
+
 
 export default function LocationPicker() {
 
+  const [showDropdown, setShowDropdown] = useState(false);
+   const [query, setQuery] = useState('');
+
+   // Create fuse instance once with locations data
+  const fuse = useMemo(() => new Fuse(locations, options), []);
+
+  // Perform fuzzy search only if query exists
+  const results = query ? fuse.search(query).map(result => result.item): locations;
+
   //context for daily activities
-  const { setDailyActivities ,setFlight ,flight, setLoadingG, setHotel , setEvents} = useContext(DailyActivitiesContext);
+  const { setDailyActivities ,setFlight ,flight, setLoadingG, setHotel , setEvents, hotel} = useContext(DailyActivitiesContext);
 
 
   const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext)
@@ -2182,93 +2198,93 @@ export default function LocationPicker() {
 
   //function to create detailed itenary
   const search = async (from, to, startDate, endDate) => {
-  console.log(from, to, startDate, endDate);
+    console.log(from, to, startDate, endDate);
 
-  localStorage.setItem("destination", to)
-  if (!from || !to) {
-    console.log("input data");
-    toast.error("Please select a destination and your current location.");
-    return;
-  }
-
-  // Validate date range (at least 1 day apart)
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  const diffInMs = end - start;
-  const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-  if (diffInDays < 1) {
-    toast.error("Please select an end date at least 1 day after the start date.");
-    return;
-  }
-  setLoadingG(true)
-
-
-  const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
-  const hotelOptions = {
-    method: 'GET',
-    headers: {
-      'x-rapidapi-key': process.env.NEXT_PUBLIC_HOTEL_API ,
-      'x-rapidapi-host': 'booking-com18.p.rapidapi.com'
+    localStorage.setItem("destination", to)
+    if (!from || !to) {
+      console.log("input data");
+      toast.error("Please select a destination and your current location.");
+      return;
     }
-  };
 
-  const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
-  const flightOptions = {
-    method: "GET",
-    headers: {
-      "x-rapidapi-key": process.env.NEXT_PUBLIC_FLIGHT_API,
-      "x-rapidapi-host": "flights-sky.p.rapidapi.com",
-    },
-  };
+    // Validate date range (at least 1 day apart)
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffInMs = end - start;
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-  
-
- try {
-
-  const eventsRawData =
-  {
-    city: to,
-    startDate:startDate,
-    endDate:endDate
-  }
-  
-  const eventsOptions = {
-    method:"POST",
-    headers:{"Content-type" : "application/json"},
-    body: JSON.stringify({eventsRawData})
-  }
-  // Start all requests
-  const hotelRequest = fetch(hotelUrl, hotelOptions);
-  const flightRequest = fetch(flightUrl, flightOptions);
-  const eventsApiRequest = fetch("/api/events",eventsOptions)
+    if (diffInDays < 1) {
+      toast.error("Please select an end date at least 1 day after the start date.");
+      return;
+    }
+    setLoadingG(true)
 
 
-  // Wait for both to complete
-  const [hotelResponse, flightResponse, eventsResponse] = await Promise.all([hotelRequest, flightRequest, eventsApiRequest]);
+    const hotelUrl = `https://booking-com18.p.rapidapi.com/stays/search?locationId=${locationHotels[to]}&checkinDate=${startDate.toISOString().split("T")[0]}&checkoutDate=${endDate.toISOString().split("T")[0]}&units=metric&temperature=c`;
+    const hotelOptions = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': process.env.NEXT_PUBLIC_HOTEL_API ,
+        'x-rapidapi-host': 'booking-com18.p.rapidapi.com'
+      }
+    };
 
-  // Parse JSON responses
-  const hotelData = await hotelResponse.json();
-  const flightData = await flightResponse.json();
-  const eventsData = await eventsResponse.json();
+    const flightUrl = `https://flights-sky.p.rapidapi.com/flights/search-roundtrip?fromEntityId=${locationAirport[from]}&toEntityId=${locationAirport[to]}&departDate=${startDate.toISOString().split("T")[0]}&returnDate=${endDate.toISOString().split("T")[0]}`;
+    const flightOptions = {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": process.env.NEXT_PUBLIC_FLIGHT_API,
+        "x-rapidapi-host": "flights-sky.p.rapidapi.com",
+      },
+    };
 
-  console.log(eventsData)
-  setEvents(eventsData)
+    
 
-  // --- Hotel ---
-  const cleanResult = (hotelData) => {
-    return hotelData?.data?.slice(0, 5).map((hotel) => ({
-      name: hotel.name,
-      image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
-      price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
-      location: hotel.wishlistName || "Location not available",
-      stayDate: [
-        format(startDate, "dd MMM yyyy"),
-        format(endDate, "dd MMM yyyy")
-      ],
-      url: `https://www.booking.com/hotel/${hotel.id}.html`
-    }));
-  };
+  try {
+
+    const eventsRawData =
+    {
+      city: to,
+      startDate:startDate,
+      endDate:endDate
+    }
+    
+    const eventsOptions = {
+      method:"POST",
+      headers:{"Content-type" : "application/json"},
+      body: JSON.stringify({eventsRawData})
+    }
+    // Start all requests
+    const hotelRequest = fetch(hotelUrl, hotelOptions);
+    const flightRequest = fetch(flightUrl, flightOptions);
+    const eventsApiRequest = fetch("/api/events",eventsOptions)
+
+
+    // Wait for both to complete
+    const [hotelResponse, flightResponse, eventsResponse] = await Promise.all([hotelRequest, flightRequest, eventsApiRequest]);
+
+    // Parse JSON responses
+    const hotelData = await hotelResponse.json();
+    const flightData = await flightResponse.json();
+    const eventsData = await eventsResponse.json();
+
+    console.log(eventsData)
+    setEvents(eventsData)
+
+    // --- Hotel ---
+    const cleanResult = (hotelData) => {
+      return hotelData?.data?.slice(0, 5).map((hotel) => ({
+        name: hotel.name,
+        image: hotel.photoUrls?.[0]?.replace("square60", "400x250"),
+        price: hotel.priceBreakdown?.grossPrice?.amountRounded || "Price not available",
+        location: hotel.wishlistName || "Location not available",
+        stayDate: [
+          format(startDate, "dd MMM yyyy"),
+          format(endDate, "dd MMM yyyy")
+        ],
+        url: `https://www.booking.com/hotel/${hotel.id}.html`
+      }));
+    };
 
     const formattedHotels = cleanResult(hotelData);
     setHotel(formattedHotels);
@@ -2285,14 +2301,22 @@ export default function LocationPicker() {
       return;
     }
 
-    // Build input including flight
+    
+
+  } catch (error) {
+    console.error("Error fetching flights", error);
+    toast.error("Something went wrong while fetching flights or events.");
+  }
+  
+  try {
+     // Build input including flight
     const input = {
       from,
       to,
       startDate,
       endDate,
-      flight:{...fli},
-      hotel:formattedHotels[0]
+      flight:{flight},
+      hotel:hotel
     };
 
     // Now call OpenAI with updated input
@@ -2305,14 +2329,16 @@ export default function LocationPicker() {
     const openAIData = await openAIRes.json();
     console.log("OpenAI Response:", openAIData);
     setDailyActivities(openAIData);
+    
+  } 
+  catch (error) {
+    toast.error("Error generating itenary");
 
-  } catch (error) {
-    console.error("Error fetching hotels, flights or openai:", error);
-    toast.error("Something went wrong while fetching data.");
   }
   finally{
     setLoadingG(false)
   }
+ 
 
   }
 
@@ -2338,6 +2364,37 @@ export default function LocationPicker() {
           </select>
 
         </div>
+
+         {/* <input
+        type="text"
+        placeholder="Current location"
+        value={query || curLocation}
+        onChange={(e) => {
+          const value = e.target.value;
+          setQuery(value);
+          setShowDropdown(true);
+        }}
+        onFocus={() => setShowDropdown(true)}
+        className="w-full border border-gray-300 rounded-xl p-2"
+      />
+
+      {showDropdown && results.length > 0 && (
+        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-xl mt-1 max-h-60 overflow-y-auto shadow-md">
+          {results.map((loc) => (
+            <li
+              key={loc}
+              onClick={() => {
+                setCurLocation(loc);
+                setQuery('');
+                setShowDropdown(false);
+              }}
+              className="px-4 py-2 cursor-pointer hover:bg-blue-100 text-sm"
+            >
+              {loc}
+            </li>
+          ))}
+        </ul>
+      )} */}
         <button
             onClick={handleGeolocation}
             className="p-2 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-600 cursor-pointer"

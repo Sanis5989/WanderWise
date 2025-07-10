@@ -6,6 +6,7 @@ import { createContext, useState ,useEffect} from 'react'
 import UseCases from '../Components/UseCases';
 import FeaturedCards from '../Components/FeaturedCards';
 import { useSearchParams } from 'next/navigation';
+import { addDays } from 'date-fns';
 
 
 export  const DailyActivitiesContext = createContext();
@@ -40,8 +41,8 @@ export default function Page() {
     const [events, setEvents] =useState([]);
     const [destination, setDestination] = useState("");
     const [curLocation, setCurLocation ] =useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(addDays(new Date() , 1));
+    const [endDate, setEndDate] = useState(addDays(new Date() , 2));
 
     
 
