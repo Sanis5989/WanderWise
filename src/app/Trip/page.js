@@ -40,7 +40,7 @@ export default function Page() {
     const [events, setEvents] =useState([]);
     const [destination, setDestination] = useState("");
     const [curLocation, setCurLocation ] =useState("");
-    const [startDate, setStartDate] = useState(null);
+    const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
 
     

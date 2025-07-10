@@ -2190,7 +2190,6 @@ export default function LocationPicker() {
     toast.error("Please select a destination.");
     return;
   }
-  setLoadingG(true)
 
   // Validate date range (at least 1 day apart)
   const start = new Date(startDate);
@@ -2202,6 +2201,11 @@ export default function LocationPicker() {
     toast.error("Please select an end date at least 1 day after the start date.");
     return;
   }
+  setLoadingG(true)
+
+  
+
+
 
   setLoadingG(true);  
 

@@ -23,8 +23,8 @@ export default function Navbar() {
           
         {/* display login/ signup for LARGE screen */}
           <div className='hidden md:flex flex-row gap-5 mr-3.5'>
-                <button className='button-secondary'>Log in</button>
-                <button className='button-primary'>Sign Up</button>
+                {/* <button className='button-secondary'>Log in</button>
+                <button className='button-primary'>Sign Up</button> */}
                 <ThemeToggle/>
           </div>
 
