@@ -31,7 +31,7 @@ export default function Page() {
         setStartDate(startDate);
         setEndDate(endDate);
       }
-    }, [searchParams]);
+    }, [searchParams.toString()]);
 
     const [dailyActivities,setDailyActivities] = useState();
     const [flight, setFlight] = useState();

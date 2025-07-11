@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo , useRef} from "react";
 import { FaMapMarkerAlt, FaExchangeAlt, FaCalendarAlt } from "react-icons/fa";
 import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
@@ -20,7 +20,12 @@ const options = {
 export default function LocationPicker() {
 
   const [showDropdown, setShowDropdown] = useState(false);
-   const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const wrapperRef = useRef(null);
+  const destinationRef = useRef(null);
+
+  const [queryDestination, setQueryDestination] = useState('');
+  const [showDropdownDestination, setShowDropdownDestination] = useState(false);
 
    // Create fuse instance once with locations data
   const fuse = useMemo(() => new Fuse(locations, options), []);
@@ -30,6 +35,37 @@ export default function LocationPicker() {
 
   //context for daily activities
   const { setDailyActivities ,setFlight ,flight, setLoadingG, setHotel , setEvents, hotel} = useContext(DailyActivitiesContext);
+
+  const destinationFuse = useMemo(() => new Fuse(locations, options), []);
+  const filteredResults = queryDestination
+    ? destinationFuse.search(queryDestination).map((result) => result.item)
+    : locations;
+
+  // Hide current location dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (destinationRef.current && !destinationRef.current.contains(event.target)) {
+        setShowDropdownDestination(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+
 
 
   const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext)
@@ -85,12 +121,12 @@ export default function LocationPicker() {
                       address.hamlet ||
                       "Unknown location";
           
-          setFrom(city);
+          setCurLocation(city);
           console.log(`Current city: ${city}`, data);
           
         } catch (error) {
           console.error("Reverse geocoding failed:", error);
-          setFrom(coords); // fallback to coordinates
+          setCurLocation(coords); // fallback to coordinates
         } finally {
           // setLoading(false);
         }
@@ -2347,9 +2383,9 @@ export default function LocationPicker() {
     <div className="w-full max-w-7xl mx-auto p-4 py-6">
       <div className="flex items-center justify-between rounded-full shadow-md px-4 py-6 gap-2 flex-wrap">
         {/* Leaving From */}
-        <div className="flex items-center gap-2 flex-1 min-w-[150px] md:ml-5">
+        <div ref={wrapperRef} className="flex relative items-center gap-2 flex-1 min-w-[150px] md:ml-5">
           <FaMapMarkerAlt className="text-gray-500 " size={25}/>
-          <div className="w-full">
+          {/* <div className="w-full">
             <select
                 className="w-full border border-gray-300 rounded-xl p-2"
                 value={curLocation}
@@ -2363,30 +2399,91 @@ export default function LocationPicker() {
                     ))}
           </select>
 
-        </div>
+        </div> */}
 
-         {/* <input
+            <input
+                type="text"
+                placeholder="Current location"
+                value={query || curLocation}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setQuery(value);
+                  setShowDropdown(true);
+                  setCurLocation("")
+                }}
+                onFocus={() => setShowDropdown(true)}
+                className="w-full border border-gray-300 rounded-xl p-2"
+              />
+
+            {showDropdown && results.length > 0 && (
+              <ul className="absolute top-10 z-10 left-7 w-[80%] bg-white border border-gray-300 rounded-xl mt-1 max-h-60 overflow-y-auto shadow-md">
+                {results.map((loc) => (
+                  <li
+                    key={loc}
+                    onClick={() => {
+                      setCurLocation(loc);
+                      setQuery('');
+                      setShowDropdown(false);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-blue-100 text-sm"
+                  >
+                    {loc}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button
+              onClick={handleGeolocation}
+              className="p-2 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-600 cursor-pointer"
+            >
+              <TbCurrentLocation size={20} />
+            </button>
+          </div>
+
+  
+
+        {/* Going To Destination */}
+        <div className="flex relative items-center gap-2 flex-1 min-w-[150px]" ref={destinationRef}>
+          <FaMapMarkerAlt className="text-gray-500" size={25}/>
+          {/* <div className="w-full">
+          
+            <select
+              className="w-full border border-gray-300 rounded-xl p-2"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+            >
+              <option value="">Destination</option>
+              {locations.map((loc) => (
+                <option key={loc} value={loc}>
+                  {loc}
+                </option>
+              ))}
+            </select>
+        
+          </div> */}
+          <input
         type="text"
-        placeholder="Current location"
-        value={query || curLocation}
+        placeholder="Destination"
+        value={queryDestination || destination}
         onChange={(e) => {
           const value = e.target.value;
-          setQuery(value);
-          setShowDropdown(true);
+          setQueryDestination(value);
+          setDestination('');
+          setShowDropdownDestination(true);
         }}
-        onFocus={() => setShowDropdown(true)}
+        onFocus={() => setShowDropdownDestination(true)}
         className="w-full border border-gray-300 rounded-xl p-2"
       />
 
-      {showDropdown && results.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-xl mt-1 max-h-60 overflow-y-auto shadow-md">
-          {results.map((loc) => (
+      {showDropdownDestination && filteredResults.length > 0 && (
+        <ul className="absolute top-10 z-10 left-7 w-[80%] bg-white border border-gray-300 rounded-xl mt-1 max-h-60 overflow-y-auto shadow-md">
+          {filteredResults.map((loc) => (
             <li
               key={loc}
               onClick={() => {
-                setCurLocation(loc);
-                setQuery('');
-                setShowDropdown(false);
+                setDestination(loc);
+                setQueryDestination('');
+                setShowDropdownDestination(false);
               }}
               className="px-4 py-2 cursor-pointer hover:bg-blue-100 text-sm"
             >
@@ -2394,36 +2491,7 @@ export default function LocationPicker() {
             </li>
           ))}
         </ul>
-      )} */}
-        <button
-            onClick={handleGeolocation}
-            className="p-2 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-600 cursor-pointer"
-          >
-            <TbCurrentLocation size={20} />
-          </button>
-        </div>
-
-  
-
-        {/* Going To Destination */}
-        <div className="flex items-center gap-2 flex-1 min-w-[150px]">
-          <FaMapMarkerAlt className="text-gray-500" size={25}/>
-          <div className="w-full">
-          
-          <select
-            className="w-full border border-gray-300 rounded-xl p-2"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          >
-            <option value="">Destination</option>
-            {locations.map((loc) => (
-              <option key={loc} value={loc}>
-                {loc}
-              </option>
-            ))}
-          </select>
-        
-        </div>
+      )}
         </div>
 
         {/* Dates */}
