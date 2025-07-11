@@ -2334,7 +2334,7 @@ export default function LocationPicker() {
 
     if (!flight) {
       toast.error("No flights found.");
-      return;
+      
     }
 
     
@@ -2345,7 +2345,7 @@ export default function LocationPicker() {
   }
   
   try {
-     // Build input including flight
+     // Build input including flight and hotel 
     const input = {
       from,
       to,
