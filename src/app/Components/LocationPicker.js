@@ -70,9 +70,9 @@ export default function LocationPicker() {
 
   const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext)
 
-  useEffect(()=>{
-    handleGeolocation()
-  })
+  // useEffect(()=>{
+  //   handleGeolocation()
+  // })
 
   //function to handle current location
   const handleGeolocation = () => {
