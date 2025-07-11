@@ -70,67 +70,67 @@ export default function LocationPicker() {
 
   const {destination, setDestination,curLocation, setCurLocation,startDate, setStartDate,endDate, setEndDate} = useContext(TripContext)
 
+  useEffect(()=>{
+    handleGeolocation()
+  })
 
   //function to handle current location
   const handleGeolocation = () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation not supported by your browser");
-      return;
-    }
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported by your browser");
+    return;
+  }
 
-    // Add loading state
-    // setLoading(true); // Make sure you have this state
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 10000,
+    maximumAge: 60000,
+  };
 
-    const options = {
-      enableHighAccuracy: true,    // Request high accuracy
-      timeout: 10000,              // 10 second timeout
-      maximumAge: 60000           // Accept cached position up to 1 minute old
-    };
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude, accuracy } = position.coords;
+      console.log(`Position accuracy: ${accuracy} meters`);
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude, accuracy } = position.coords;
-        const coords = `${latitude}, ${longitude}`;
-        
-        console.log(`Position accuracy: ${accuracy} meters`);
-        
-        try {
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
-            {
-              headers: {
-                'User-Agent': 'YourAppName/1.0' // Add user agent for better API compliance
-              }
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
+          {
+            headers: {
+              'User-Agent': 'WanderWiseApp/1.0' // Update this to your app name
             }
-          );
-          
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
           }
-          
-          const data = await res.json();
-          console.log('Reverse geocoding response:', position);
-          
-          // Better address parsing
-          const address = data.address || {};
-          const city = address.city || 
-                      address.town || 
-                      address.village || 
-                      address.suburb ||
-                      address.neighbourhood ||
-                      address.hamlet ||
-                      "Unknown location";
-          
-          setCurLocation(city);
-          console.log(`Current city: ${city}`, data);
-          
-        } catch (error) {
-          console.error("Reverse geocoding failed:", error);
-          setCurLocation(coords); // fallback to coordinates
-        } finally {
-          // setLoading(false);
+        );
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        const address = data.address || {};
+        const city =
+          address.city ||
+          address.town ||
+          address.village ||
+          address.suburb ||
+          address.neighbourhood ||
+          address.hamlet ||
+          "Unknown location";
+
+        console.log("Detected city:", city);
+
+       // Lower threshold = stricter match
+        const result = fuse.search(city); // city = "Gold Coast City"
+        if (result.length > 0) {
+          setCurLocation(result[0].item); // sets "Gold Coast"
+        } else {
+          console.log("falback city")
+          setCurLocation(city); // fallback
         }
-      },
+
+      } catch (error) {
+        console.error("Reverse geocoding failed:", error);
+        setCurLocation(`${latitude}, ${longitude}`); // Fallback to coords
+      }
+    },
       (error) => {
         // setLoading(false);
         console.error("Geolocation error:", error);
