@@ -22,7 +22,7 @@ export default function EventSwiper() {
     },
     exit: (direction) => ({
       opacity: 0,
-      x: direction === "next" ? -100 : 100, // Left for next, right for prev
+      x: direction === "next" ? -100 : 100, // Left for next, right for previos
     }),
   };
 
