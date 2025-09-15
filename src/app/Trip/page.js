@@ -7,10 +7,11 @@ import UseCases from '../Components/UseCases';
 import FeaturedCards from '../Components/FeaturedCards';
 import { useSearchParams } from 'next/navigation';
 import { addDays } from 'date-fns';
+import { DailyActivitiesContext, TripContext } from '../contexts/TripContext';
 
 
-export  const DailyActivitiesContext = createContext();
-export const TripContext = createContext();
+// export  const DailyActivitiesContext = createContext();
+// export const TripContext = createContext();
 
 
 export default function Page() {
