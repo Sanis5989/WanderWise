@@ -12,6 +12,28 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      // This is called on sign-in
+      if (user) {
+        await connectDb();
+        const dbUser = await User.findOne({ email: user.email });
+        // Add custom properties to the token
+        token.id = dbUser._id;
+        token.role = dbUser.role; // Assuming you have a 'role' field in your User model
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // This is called whenever a session is checked
+      // Pass the custom properties from the token to the session
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
 }
 

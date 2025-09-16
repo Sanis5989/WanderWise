@@ -6,12 +6,16 @@ import ThemeToggle from './ThemeToogle'
 import Image from 'next/image'
 import { X, Menu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import ProfilePicture from './ProfilePicture'
+
 
 
 export default function Navbar() {
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   return (
     <>
@@ -22,23 +26,45 @@ export default function Navbar() {
           </div>
           
         {/* display login/ signup for LARGE screen */}
-          <div className='hidden md:flex flex-row gap-5 mr-3.5'>
-                <button className='button-secondary'  onClick={()=> router.push("/auth")}>Log in</button>
-                <button className='button-primary' onClick={()=> router.push("/auth")}>Sign Up</button>
-                {/* <ThemeToggle/> */}
-          </div>
+            {
+              status ==  "authenticated" && 
+                <div className='hidden md:flex'>
+                  <ProfilePicture/>
+                </div>
+                  
+            }
+            {
+              status !=  "authenticated" && 
+                <div className='hidden md:flex flex-row gap-5 mr-3.5'>
+                      <button className='button-secondary'  onClick={()=> router.push("/auth")}>Log in</button>
+                      <button className='button-primary' onClick={()=> router.push("/auth")}>Sign Up</button>
+                      {/* <ThemeToggle/> */}
+                </div>
+            }
 
         {/* display login/ signup for SMALL screen */}
 
            <>
+           {/* display login/ signup for LARGE screen */}
+            {
+              status ==  "authenticated" && 
+                <div className="md:hidden p-2">
+                  <ProfilePicture className="md:hidden p-2"/>
+                </div>
+            }
             {/* Hamburger Icon */}
-            <button
-              className="md:hidden p-2"
-              onClick={() => setIsOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu className="w-10 h-10" />
+
+            {
+              status !=  "authenticated" &&
+
+              <button
+                className="md:hidden p-2"
+                onClick={() => setIsOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu className="w-10 h-10" />
             </button>
+}
 
             {/* Overlay */}
             {isOpen && (
@@ -68,7 +94,7 @@ export default function Navbar() {
               <div className="flex flex-col gap-4 p-4">
                 <button className="button-secondary w-full">Log in</button>
                 <button className="button-primary w-full">Sign Up</button>
-                <ThemeToggle />
+                {/* <ThemeToggle /> */}
               </div>
             </div>
           </>

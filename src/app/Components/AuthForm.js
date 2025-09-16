@@ -10,6 +10,7 @@ import { signIn } from 'next-auth/react';
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [error, setError] = useState('');
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
@@ -20,6 +21,39 @@ export default function AuthForm() {
     // After a successful login, the user will be sent to the homepage ('/').
     signIn('google', { callbackUrl: '/' });
   };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError(''); // Clear previous errors
+    
+    const formData = new FormData(event.currentTarget);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    
+    const endpoint = isSignUp ? '/api/auth/register' : '/api/auth/login';
+    const payload = isSignUp ? { name, email, password } : { email, password };
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong!');
+      }
+
+      // If login or registration is successful, redirect to homepage
+      window.location.href = '/'; 
+
+    } catch (err) {
+      setError(err.message);
+    }
+  }
 
 
   return (
@@ -65,7 +99,7 @@ export default function AuthForm() {
         </p>
       </div>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         {/* AnimatePresence handles the enter/exit animation of the Name field */}
         <AnimatePresence>
           {isSignUp && (
@@ -79,6 +113,7 @@ export default function AuthForm() {
               <FiUser className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
+                name='name'
                 placeholder="Full Name"
                 className="w-full py-3 pl-10 pr-4 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -90,6 +125,7 @@ export default function AuthForm() {
           <FiMail className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
           <input
             type="email"
+            name='email'
             placeholder="Email Address"
             className="w-full py-3 pl-10 pr-4 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -98,6 +134,7 @@ export default function AuthForm() {
         <div className="relative">
           <FiLock className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
           <input
+          name='password'
             type="password"
             placeholder="Password"
             className="w-full py-3 pl-10 pr-4 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
