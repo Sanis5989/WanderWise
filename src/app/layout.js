@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./Providers/ThemeProvider";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "../app/Providers/AuthProvider"
 
 const montserrat = Inter({
   variable: "--font-montserrat",
@@ -21,9 +22,11 @@ export default function RootLayout({ children }) {
         className={`${montserrat.variable} antialiased`}
       >
         <Toaster position="center" reverseOrder={false} />
-        <ThemeProvider>
-                    {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+                      {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

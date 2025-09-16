@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DailyActivitiesContext } from "../Trip/page";
+import { DailyActivitiesContext } from "../contexts/TripContext"
 
 export default function EventSwiper() {
   const { events, loadingG } = useContext(DailyActivitiesContext);

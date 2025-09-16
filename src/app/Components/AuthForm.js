@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Import the Google icon
 import { FcGoogle } from 'react-icons/fc';
 import { FiUser, FiMail, FiLock } from 'react-icons/fi';
+import { signIn } from 'next-auth/react';
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -15,8 +16,9 @@ export default function AuthForm() {
   };
 
   const handleGoogleSignIn = () => {
-    // This is where you would trigger your Google sign-in logic (e.g., using NextAuth.js)
-    console.log('Signing in with Google...');
+    // This function tells NextAuth to start the Google OAuth flow.
+    // After a successful login, the user will be sent to the homepage ('/').
+    signIn('google', { callbackUrl: '/' });
   };
 
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight,FaArrowCircleLeft } from "react-icons/fa";
-import { DailyActivitiesContext } from '../Trip/page';
+import { DailyActivitiesContext } from "../contexts/TripContext";
 
 export default function HotelList({ hotels }) {
   const [current, setCurrent] = useState(0);

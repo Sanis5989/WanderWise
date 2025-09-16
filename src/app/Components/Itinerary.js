@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import FlightCard from "./FlightCard";
-import { DailyActivitiesContext } from "../Trip/page";
+import { DailyActivitiesContext } from "../contexts/TripContext";
 import HotelList from "./HotelList";
 import { ChevronDown, ChevronUp } from "lucide-react"; 
 import EventSwiper from "./EventSwiper";

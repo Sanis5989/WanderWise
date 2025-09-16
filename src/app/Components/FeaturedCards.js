@@ -2,7 +2,7 @@
 import { addDays, format } from 'date-fns';
 import Image from 'next/image';
 import { useContext , useEffect} from 'react';
-import { DailyActivitiesContext, TripContext } from '../Trip/page';
+import { DailyActivitiesContext, TripContext } from "../contexts/TripContext";
 import { useSearchParams } from 'next/navigation';
 import { locationAirport,locationHotels, locations } from '../Utils/location';
 import toast from 'react-hot-toast';

@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useContext, useEffect } from "react";
-import { DailyActivitiesContext } from "../Trip/page";
+import { DailyActivitiesContext } from "../contexts/TripContext";
 // import { FlightContext } from "../Trip/page";
 
 export default function FlightCard({flightData}) {

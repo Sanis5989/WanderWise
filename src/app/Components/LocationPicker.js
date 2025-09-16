@@ -4,10 +4,10 @@ import { FaMapMarkerAlt, FaExchangeAlt, FaCalendarAlt } from "react-icons/fa";
 import { TbCurrentLocation } from "react-icons/tb";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { DailyActivitiesContext} from "../Trip/page";
+import { DailyActivitiesContext} from "../contexts/TripContext";
 import toast, { Toaster } from 'react-hot-toast';
 import { addDays,format } from "date-fns";
-import { TripContext } from '../Trip/page';
+import { TripContext } from "../contexts/TripContext";
 import { locationAirport,locationHotels,locations } from "../Utils/location";
 import Fuse from "fuse.js";
 
