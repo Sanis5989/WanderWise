@@ -4,11 +4,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
-
+import { IoPersonCircle } from "react-icons/io5";
+import { useRouter } from 'next/navigation';
 export default function ProfilePicture() {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
 
   // Close the dropdown if the user clicks outside of it
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function ProfilePicture() {
   }, [menuRef]);
 
 
+
   if (status === 'loading') {
     return <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse"></div>;
   }
@@ -33,13 +36,19 @@ export default function ProfilePicture() {
       <div className="relative" ref={menuRef}>
         {/* Profile Picture Button */}
         <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
-          <Image
-            src={session.user.image}
-            alt={session.user.name || 'User profile picture'}
-            width={50}
-            height={50}
-            className="rounded-full mx-6"
-          />
+          { session.image ? 
+            <Image
+              src={session.image || `https://avatar.vercel.sh/${session.user.email}`}
+              alt={session.user.name || 'User profile picture'}
+              width={50}
+              height={50}
+              className="rounded-full mx-6"
+            /> :
+            <IoPersonCircle className="rounded-full mx-6" size={50} color="#18254f"/>
+
+          }
+          
+          
         </button>
 
         {/* Dropdown Menu */}
@@ -51,6 +60,7 @@ export default function ProfilePicture() {
             </div>
             <div className="border-t border-gray-100"></div>
             <button
+            onClick={() => router.push("/mytrips")}
               className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
             >
              My Trips

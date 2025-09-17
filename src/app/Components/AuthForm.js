@@ -7,10 +7,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FcGoogle } from 'react-icons/fc';
 import { FiUser, FiMail, FiLock } from 'react-icons/fi';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
@@ -23,37 +26,59 @@ export default function AuthForm() {
   };
 
   async function handleSubmit(event) {
-    event.preventDefault();
-    setError(''); // Clear previous errors
-    
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const password = formData.get('password');
-    
-    const endpoint = isSignUp ? '/api/auth/register' : '/api/auth/login';
-    const payload = isSignUp ? { name, email, password } : { email, password };
+  event.preventDefault(); // Prevent default form submission
+  setIsLoading(true);
+  setError('');
 
+  const formData = new FormData(event.currentTarget);
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const password = formData.get('password');
+
+  if (isSignUp) {
+    // --- Handle Registration ---
     try {
-      const response = await fetch(endpoint, {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ name, email, password }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || 'Failed to register.');
+      }
+      
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong!');
+      if (result?.error) {
+         setError(result.error);
+      } else {
+        router.push('/');
       }
-
-      // If login or registration is successful, redirect to homepage
-      window.location.href = '/'; 
-
     } catch (err) {
       setError(err.message);
+      console.error("Registration/Login Error:", err.message); // <-- FIX: Log err.message
+    }
+  } else {
+    // --- Handle Login ---
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError("Invalid email or password.");
+    } else {
+      router.push('/');
     }
   }
+  setIsLoading(false);
+};
 
 
   return (

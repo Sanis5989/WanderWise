@@ -2364,6 +2364,24 @@ export default function LocationPicker() {
 
     const openAIData = await openAIRes.json();
     console.log("OpenAI Response:", openAIData);
+
+    const plan = {
+                    "title": `Trip to ${to}`,
+                    "destination": to,
+                    "dailyPlan": openAIData?.dailyPlan
+                  }
+
+    const saveTrip = await fetch("/api/plans",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(plan) ,
+      })
+
+    if(saveTrip.ok){
+      console.log("trip saved")
+    }
+    
     setDailyActivities(openAIData);
     
   } 
@@ -2377,6 +2395,7 @@ export default function LocationPicker() {
  
 
   }
+
 
 
   return (
@@ -2518,6 +2537,7 @@ export default function LocationPicker() {
         <button className="button-primary font-semibold mr-4" onClick={()=> search(curLocation,destination,startDate,endDate)}>
           Search
         </button>
+        
       </div>
       
     </div>

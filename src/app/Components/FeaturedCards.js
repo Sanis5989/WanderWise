@@ -220,6 +220,23 @@ export default function FeaturedCards() {
 
     const openAIData = await openAIRes.json();
     console.log("OpenAI Response:", openAIData);
+
+    const plan = {
+                    "title": `Trip to ${to}`,
+                    "destination": to,
+                    "dailyPlan": openAIData?.dailyPlan
+                  }
+
+    const saveTrip = await fetch("/api/plans",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(plan) ,
+      })
+
+    if(saveTrip.ok){
+      console.log("trip saved")
+    }
     setDailyActivities(openAIData);
 
   } catch (error) {
