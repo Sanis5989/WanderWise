@@ -211,7 +211,7 @@ export default function FeaturedCards() {
       hotel:formattedHotels[0]
     };
 
-    // Now call OpenAI with updated input
+    //OpenAI call with updated input
     const openAIRes = await fetch("/api/openai", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -249,6 +249,7 @@ export default function FeaturedCards() {
 
   }
 
+  //loading default today date 
     const today = addDays(new Date(), 1)
     const searchD = async (from, to, startDate, endDate) =>{
       setCurLocation(from);

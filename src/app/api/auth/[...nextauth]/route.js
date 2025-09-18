@@ -13,10 +13,13 @@ const authOptions = {
     strategy: "jwt",
   },
   providers: [
+    //google provider
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+
+    //jwt provider
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -29,13 +32,13 @@ const authOptions = {
         const user = await User.findOne({ email: credentials.email });
         if (!user) {
           console.log("No user found with this email.");
-          return null; // <-- CHANGE: Return null instead of throwing
+          return null;
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) {
           console.log("Incorrect password.");
-          return null; // <-- CHANGE: Return null instead of throwing
+          return null; 
         }
 
         // Return user object if everything is valid

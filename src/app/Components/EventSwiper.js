@@ -58,6 +58,7 @@ export default function EventSwiper() {
               <ChevronRight size={30} />
             </button>
           </div>
+          {/* events container after fetched */}
           <motion.div
             key={index}
             variants={variants}
@@ -66,13 +67,13 @@ export default function EventSwiper() {
             exit={{ opacity: 0, x: -100 }}
             custom={direction}
             transition={{ type: 'spring', stiffness: 300, damping: 30, duration: 0.4 }}
-            className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-[550px]" // Fixed height
+            className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-[550px]" 
           >
             {events[index]?.image && (
               <img
                 src={events[index].image}
                 alt={events[index].title}
-                className="w-full h-64 object-cover" // Fixed image height
+                className="w-full h-64 object-cover" 
               />
             )}
             <div className="p-4 flex-1 flex flex-col">
