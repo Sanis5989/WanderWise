@@ -68,7 +68,7 @@ Return ONLY valid JSON.
 `;
 
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.4-mini-2026-03-17",
       temperature: 0.7,
       messages: [
         { role: "system", content: SYSTEM_PROMPT.trim() },
